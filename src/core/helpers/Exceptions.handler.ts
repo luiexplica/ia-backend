@@ -1,9 +1,8 @@
 
 import { HttpStatus } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
-// import { _Response_I } from "@tesis-project/dev-globals/dist/core/interfaces";
+import { Response_I } from "../interfaces/response.interface";
 
-interface _Response_I {}
 
 export class ExceptionsHandler {
 
@@ -23,7 +22,7 @@ export class ExceptionsHandler {
         } else {
 
             // Manejar otros tipos de errores o transformar el error en la estructura deseada
-            const response: _Response_I = {
+            const response: Response_I = {
                 ok: false,
                 statusCode: error.statusCode || HttpStatus.BAD_REQUEST || 500,
                 message: error.message || 'An unexpected error occurred',
@@ -38,7 +37,7 @@ export class ExceptionsHandler {
     }
 
     // Función de validación para la estructura de respuesta
-    isResponseStructure(obj: any): obj is _Response_I {
+    isResponseStructure(obj: any): obj is Response_I {
         return (
             typeof obj === 'object' &&
             obj !== null &&
@@ -52,6 +51,5 @@ export class ExceptionsHandler {
             (typeof obj.context === 'string' || obj.context === undefined)
         );
     }
-
 
 }

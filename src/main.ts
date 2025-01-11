@@ -1,12 +1,13 @@
 
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { envs } from './core/config/envs';
+
+import { envs } from '@core/config/envs';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
 
-  const logger = new Logger('Profile-MS - Main')
+  const logger = new Logger('IA Backend - Main')
 
   // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
   //     AppModule,
