@@ -5,5 +5,7 @@ export interface JWT_Payload_I {
   _id: string;
   email: string;
   role: User_Role_Enum;
+  username: string;
+  user: string;
 
 }

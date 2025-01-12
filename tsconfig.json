@@ -3,6 +3,7 @@
     "paths": {
       "@core/*": ["./src/core/*"],
       "@auth/*": ["./src/modules/auth/*"],
+      "@user/*": ["./src/modules/user/*"],
     },
     "module": "commonjs",
     "declaration": true,

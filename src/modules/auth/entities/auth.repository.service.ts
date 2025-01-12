@@ -1,4 +1,4 @@
-import { EntityManager, EntityRepository } from '@mikro-orm/core';
+import { EntityManager, EntityRepository, RequiredEntityData } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { Auth_Ety } from './auth.entity';
 import { _Process_Save_I, _Find_One_I, _Process_Update_I } from '@core/interfaces/orm.interfaces';
@@ -12,18 +12,16 @@ export class Auth_ormRepository extends EntityRepository<Auth_Ety> {
     super(em.fork(), Auth_Ety);
   }
 
-  async create_auth({ save, _em }: _Process_Save_I<Auth_Ety>): Promise<Auth_Ety> {
-
+  async create_auth({ save, _em }: _Process_Save_I<RequiredEntityData<Auth_Ety, never, false>>): Promise<Auth_Ety> {
     const new_user = await _em.create(Auth_Ety, save);
     await _em.persist(new_user);
     return new_user;
-
   }
 
-  async find_all(em?: EntityManager): Promise<Auth_Ety[]> {
-    const _em = em ?? this.em;
-    return await _em.find(Auth_Ety, {});
-  }
+  // async find_all(em?: EntityManager): Promise<Auth_Ety[]> {
+  //   const _em = em ?? this.em;
+  //   return await _em.find(Auth_Ety, {});
+  // }
 
   async delete_auth({ find, _em }: _Find_One_I<Auth_Ety, 'Auth_Ety'>): Promise<boolean> {
 
@@ -52,6 +50,5 @@ export class Auth_ormRepository extends EntityRepository<Auth_Ety> {
     return user_find;
 
   }
-
 
 }

@@ -20,10 +20,10 @@ const config: Options = {
 
   driver: PostgreSqlDriver,
 
-  // clientUrl: dbUrl,
   clientUrl: dbUrl,
 
   debug: true,
+
   migrations: {
     path: 'dist/src/database/migrations',
     pathTs: './src/database/migrations',

@@ -8,7 +8,7 @@ import { LoginAuth_Dto } from './dto/login-user.dto';
 import { AuthLogin_UseCase } from './useCases/authLogin.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
-import { User_Role_Enum } from './interfaces/auth.interface';
+import { Auth_Ety } from './entities/auth.entity';
 
 
 @Injectable()
@@ -23,6 +23,32 @@ export class AuthService {
   ) {
 
   }
+
+  // async delete(id: string) {
+
+  //   const f_em = this.em.fork();
+
+  //   try {
+
+  //     const auth = await f_em.findOne(Auth_Ety, { _id: id });
+  //     await f_em.remove(auth);
+
+  //     f_em.flush();
+
+  //     return CreateResponse({
+  //       ok: true,
+  //       message: 'Usuario eliminado correctamente',
+  //       statusCode: HttpStatus.OK,
+  //     })
+
+  //   } catch (error) {
+
+  //     this.logger.error(`[Auth Delete] Error: ${error}`);
+  //     this.ExceptionsHandler.EmitException(error, 'AuthService.delete');
+
+  //   }
+
+  // }
 
   async register(register: AuthRegister_Dto) {
 
@@ -65,7 +91,13 @@ export class AuthService {
 
       let user = await AuthLogin_UseCase(login, f_em);
       delete user.password;
-      const token = await this.signJWT(user as any);
+      const token = await this.signJWT({
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        user: user._id,
+        username: user.username ?? '',
+      });
 
       f_em.flush();
 

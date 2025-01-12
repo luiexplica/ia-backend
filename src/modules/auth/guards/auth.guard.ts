@@ -1,27 +1,22 @@
-import { AuthService } from './../auth.service';
-
 
 import {
   CanActivate,
   ExecutionContext,
-  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { Request } from 'express';
-
-import { firstValueFrom } from 'rxjs';
-import { envs } from '../../../core/config/envs';
+import { envs } from '@core/config/envs';
+import { extractTokenFromHeader } from '@core/helpers/req.helpers';
 
 @Injectable()
 export class Auth_Guard implements CanActivate {
 
+  jwtService = new JwtService();
+
   constructor(
-    // @Inject(NATS_SERVICE) private readonly client: ClientProxy
-    private readonly jwtService: JwtService,
-    private readonly AuthService: AuthService
+    // private readonly jwtService: JwtService,
   ) {
 
   }
@@ -29,7 +24,7 @@ export class Auth_Guard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = extractTokenFromHeader(request);
 
     if (!token) {
       throw new UnauthorizedException('Token not found');
@@ -41,20 +36,17 @@ export class Auth_Guard implements CanActivate {
         secret: envs.jwtSecret
       });
 
-      // const new_token: string = await this.AuthService.signJWT(user)
-
       const auth = user;
 
       request['auth_user'] = {
+        _id: auth._id,
         email: auth.email,
         status: auth.status,
         role: auth.role,
-        _id: auth._id,
-        token: token
-        // created_at: auth.created_at,
-        // user: auth.user,
+        token: token,
+        user: auth.user,
+        created_at: auth.created_at,
       }
-
 
     } catch {
 
@@ -66,9 +58,5 @@ export class Auth_Guard implements CanActivate {
 
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
-  }
 
 }

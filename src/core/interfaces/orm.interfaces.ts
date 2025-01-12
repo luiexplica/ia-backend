@@ -1,6 +1,4 @@
 
-
-
 import { EntityManager, FilterQuery, FindOneOptions, FindOptions } from "@mikro-orm/core";
 
 export interface _Find_One_I<T extends object, J extends string> {
@@ -16,7 +14,7 @@ export interface _Find_Many_I<T extends object, J extends string> {
 }
 
 export interface _Process_Save_I<T = any> {
-  save: Partial<T>,
+  save: T,
   _em?: EntityManager
 }
 

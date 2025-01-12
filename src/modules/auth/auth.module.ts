@@ -8,12 +8,17 @@ import { AuthController } from './auth.controller';
 import { Auth_ormRepository } from './entities/auth.repository.service';
 import { Auth_Ety } from './entities/auth.entity';
 import { envs } from '@core/config/envs';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthController],
   providers: [
+    JwtStrategy,
     AuthService,
     Auth_ormRepository
+  ],
+  exports: [
+    JwtStrategy, PassportModule
   ],
   imports: [
     PassportModule.register({
@@ -31,7 +36,7 @@ import { envs } from '@core/config/envs';
     }),
 
     MikroOrmModule.forFeature([
-        Auth_Ety
+      Auth_Ety
     ]),
   ]
 })

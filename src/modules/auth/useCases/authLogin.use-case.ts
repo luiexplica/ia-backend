@@ -7,7 +7,7 @@ import { CreateResponse } from "@core/helpers/createResponse";
 import * as bcrypt from 'bcrypt';
 import { UpdateLastSession_UseCase } from "./updateLastSession.use-case";
 
-const isValidPassword = (password: string, authPassword: string) => {
+const isValidPassword = async (password: string, authPassword: string) => {
 
   const isPassValid = bcrypt.compareSync(password, authPassword);
 
@@ -50,9 +50,8 @@ export const AuthLogin_UseCase = async (login: LoginAuth_Dto, em: EntityManager)
   } = login;
 
   const user = await isValidEmailNotExist(email, em);
-  isValidPassword(password, user.password);
+  await isValidPassword(password, user.password);
   const now_user = await UpdateLastSession_UseCase(email, em);
-
 
   return {
     ...now_user,

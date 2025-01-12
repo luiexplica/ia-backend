@@ -12,6 +12,7 @@ enum NodeEnv {
 interface EnvVars_I {
   PORT: number;
   JWT_SECRET: string;
+  DTO_PREFIX: string;
 
   NATS_SERVERS: string[];
 
@@ -41,6 +42,8 @@ const envsSchema = joi.object({
   DB_PORT: joi.number().required(),
   DB_USERNAME: joi.string().required(),
 
+  DTO_PREFIX: joi.string().optional(),
+
   // DB_URL: joi.string().required()
 
 }).unknown(true);
@@ -62,6 +65,7 @@ const envVars: EnvVars_I = value;
 export const envs = {
   port: envVars.PORT,
   jwtSecret: envVars.JWT_SECRET,
+  dtoPrefix: envVars.DTO_PREFIX,
   // natsServers: envVars.NATS_SERVERS,
 
   nodeEnv: envVars.NODE_ENV,
