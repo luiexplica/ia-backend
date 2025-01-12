@@ -8,7 +8,7 @@ export function Auth() {
     return applyDecorators(
 
             // UseGuards(AuthGuard('jwt'), Admin_Internal_Guard)
-             UseGuards(AuthGuard('jwt'), Auth_Guard)
+             UseGuards(Auth_Guard)
 
     );
 }

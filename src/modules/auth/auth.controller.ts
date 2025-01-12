@@ -11,7 +11,6 @@ import { Auth } from './decorators/auth.decorator';
 @Controller('auth')
 export class AuthController {
 
-
   constructor(
     private readonly authService: AuthService
   ) { }
@@ -29,6 +28,7 @@ export class AuthController {
   @Auth()
   @Get('verify')
   verifyUser(@User_Auth() auth: Session_Auth_I) {
+
     const resp: Response_I<Session_Auth_I> = {
       ok: true,
       statusCode: 200,

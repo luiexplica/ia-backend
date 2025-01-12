@@ -65,11 +65,7 @@ export class AuthService {
 
       let user = await AuthLogin_UseCase(login, f_em);
       delete user.password;
-      const token = await this.signJWT({
-        _id: user._id,
-        email: user.email,
-        role: user.role as User_Role_Enum
-      });
+      const token = await this.signJWT(user as any);
 
       f_em.flush();
 
