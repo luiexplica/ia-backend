@@ -18,20 +18,17 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() register: AuthRegister_Dto) {
-
     return await this.authService.register(register);
-
   }
 
   @Post('login')
-  login(@Body() login: LoginAuth_Dto) {
-
+  async login(@Body() login: LoginAuth_Dto) {
+    return await this.authService.login(login);
   }
 
   @Auth()
   @Get('verify')
   verifyUser(@User_Auth() auth: Session_Auth_I) {
-
     const resp: Response_I<Session_Auth_I> = {
       ok: true,
       statusCode: 200,
@@ -40,7 +37,6 @@ export class AuthController {
     };
 
     return resp;
-
   }
 
 }

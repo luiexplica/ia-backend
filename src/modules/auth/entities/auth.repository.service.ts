@@ -41,7 +41,6 @@ export class Auth_ormRepository extends EntityRepository<Auth_Ety> {
 
   async update_auth({ find, update, _em }: _Process_Update_I): Promise<Auth_Ety> {
 
-
     const user_find = await this.findOne(find);
 
     if (!user_find) {

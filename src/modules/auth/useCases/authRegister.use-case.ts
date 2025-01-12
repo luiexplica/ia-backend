@@ -1,12 +1,11 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { AuthRegister_Dto } from "../dto/register-user.dto";
-import { Response_I } from "@core/interfaces/response.interface";
-import { Connection, EntityManager, IDatabaseDriver } from "@mikro-orm/core";
+import { EntityManager } from "@mikro-orm/core";
 import { Auth_Ety } from "../entities/auth.entity";
 import * as uuid from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { CreateResponse } from "@core/helpers/createResponse";
-import { Auth_ormRepository } from "../entities/auth.repository.service";
+import { GetAuthByEmail_UseCase } from "./getAuthByEmail.use-case";
 
 const isValidRegisterRole = (role: string): void => {
   if (role === 'ADMIN_ROLE') {
@@ -20,9 +19,9 @@ const isValidRegisterRole = (role: string): void => {
   }
 };
 
-const isValidEmailExists = async (email: string, repository: Auth_ormRepository): Promise<void> => {
+const isValidEmailExists = async (email: string, em: EntityManager): Promise<void> => {
 
-  const user = await repository.findOne({ email });
+  const user = await GetAuthByEmail_UseCase(email, em);
 
   if (user) {
     const resp = CreateResponse({
@@ -36,7 +35,7 @@ const isValidEmailExists = async (email: string, repository: Auth_ormRepository)
 
 }
 
-export const AuthRegister_UseCase = async (AuthRegister_Dto: AuthRegister_Dto, _em: EntityManager): Promise<Auth_Ety> => {
+export const AuthRegister_UseCase = async (AuthRegister_Dto: AuthRegister_Dto, em: EntityManager): Promise<Auth_Ety> => {
 
   const {
     email,
@@ -44,9 +43,10 @@ export const AuthRegister_UseCase = async (AuthRegister_Dto: AuthRegister_Dto, _
     role
   } = AuthRegister_Dto;
 
-  const repository = _em.getRepository(Auth_Ety);
-  await isValidEmailExists(email, repository);
+  await isValidEmailExists(email, em);
   isValidRegisterRole(role);
+
+  const repository = em.getRepository(Auth_Ety);
 
   let new_auth = await repository.create_auth({
     save: {
@@ -56,7 +56,7 @@ export const AuthRegister_UseCase = async (AuthRegister_Dto: AuthRegister_Dto, _
       password: bcrypt.hashSync(password, 10),
       // user: uuid.v4()
     },
-    _em
+    _em: em
   });
 
   return new_auth;
