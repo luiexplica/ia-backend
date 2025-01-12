@@ -1,5 +1,5 @@
 
-import { PaginationMeta_I } from "../helpers/pagination.meta";
+import { PaginationMeta_I } from "@core/helpers/pagination.meta";
 
 export interface Response_I<T = any> {
   ok?: boolean;

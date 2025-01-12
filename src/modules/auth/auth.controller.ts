@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { AuthRegister_Dto } from './dto/register-user.dto';
+import { LoginAuth_Dto } from './dto/login-user.dto';
+import { User_Auth } from './decorators/user-auth.decorator';
+import { Session_Auth_I } from './interfaces/auth.interface';
+import { Response_I } from '../../core/interfaces/response.interface';
+import { Auth } from './decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+
+  constructor(
+    private readonly authService: AuthService
+  ) { }
+
+  @Post('register')
+  async register(@Body() register: AuthRegister_Dto) {
+
+    return await this.authService.register(register);
+
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('login')
+  login(@Body() login: LoginAuth_Dto) {
+
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Auth()
+  @Get('verify')
+  verifyUser(@User_Auth() auth: Session_Auth_I) {
+
+    const resp: Response_I<Session_Auth_I> = {
+      ok: true,
+      statusCode: 200,
+      message: 'Token verify',
+      data: auth
+    };
+
+    return resp;
+
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
 }

@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
+import { AuthRegister_Dto } from './dto/register-user.dto';
+import { EntityManager } from '@mikro-orm/core';
+import { AuthRegister_UseCase } from './useCases/authRegister.use-case';
+import { CreateResponse } from '@core/helpers/createResponse';
+
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+
+  private readonly logger = new Logger('AuthService');
+  ExceptionsHandler = new ExceptionsHandler();
+
+  constructor(
+    private readonly em: EntityManager,
+  ) {
+
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async register(register: AuthRegister_Dto) {
+
+    const f_em = this.em.fork();
+
+    try {
+
+      const new_auth = await AuthRegister_UseCase(register, f_em);
+      // f_em.flush();
+
+      return CreateResponse({
+        ok: true,
+        data: {
+          ...new_auth,
+          password: '****'
+        },
+        message: 'Usuario creado correctamente',
+        statusCode: HttpStatus.CREATED,
+      })
+
+    } catch (error) {
+
+      console.log('sale poracá', error);
+      this.logger.error(`[Auth Register] Error: ${error}`);
+      this.ExceptionsHandler.EmitException(error, 'AuthService.register');
+
+    }
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
 }
