@@ -4,7 +4,7 @@ import { EntityManager } from "@mikro-orm/core";
 import { Auth_Ety } from "../entities/auth.entity";
 import * as bcrypt from 'bcrypt';
 import { CreateResponse } from "@core/helpers/createResponse";
-import { GetAuthByEmail_UseCase } from "./getAuthByEmail.use-case";
+import { GetAuthByEmail_UC } from "./getAuthByEmail.use-case";
 
 const isValidRegisterRole = (role: string): void => {
   if (role === 'ADMIN_ROLE') {
@@ -20,7 +20,7 @@ const isValidRegisterRole = (role: string): void => {
 
 const isValidEmailExists = async (email: string, em: EntityManager): Promise<void> => {
 
-  const user = await GetAuthByEmail_UseCase(email, em);
+  const user = await GetAuthByEmail_UC(email, em);
 
   if (user) {
     const resp = CreateResponse({
@@ -34,7 +34,7 @@ const isValidEmailExists = async (email: string, em: EntityManager): Promise<voi
 
 }
 
-export const AuthRegister_UseCase = async (AuthRegister_Dto: AuthRegister_Dto, em: EntityManager): Promise<AuthRegister_Dto> => {
+export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, em: EntityManager): Promise<AuthRegister_Dto> => {
 
   const {
     name,

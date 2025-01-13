@@ -7,7 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { envs } from "@core/config/envs";
 
 @Injectable()
-export class UserOrAdmin_Guard implements CanActivate {
+export class AdminOrSupport_Guard implements CanActivate {
 
   jwtService = new JwtService();
 
@@ -20,7 +20,6 @@ export class UserOrAdmin_Guard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = extractTokenFromHeader(request);
-    const auth_id = request.params.auth_id;
 
     if (!token) {
       throw new UnauthorizedException('Token not found');
@@ -32,9 +31,9 @@ export class UserOrAdmin_Guard implements CanActivate {
         secret: envs.jwtSecret,
       } );
 
-      const { role, user } = decodedToken;
+      const { role } = decodedToken;
 
-      return this.isValidUserOrAdmin(role, user, auth_id)
+      return this.isValidAdmin(role)
 
     } catch (error) {
 
@@ -44,10 +43,9 @@ export class UserOrAdmin_Guard implements CanActivate {
 
   }
 
-  isValidUserOrAdmin(role: User_Role_Enum, user: string, auth_id: string): boolean {
+  isValidAdmin(role: User_Role_Enum): boolean {
 
     if (role === User_Role_Enum.ADMIN_ROLE || role === User_Role_Enum.SUPPORT_ROLE) return true;
-    if (role === User_Role_Enum.CLIENT_ROLE && user === auth_id) return true;
 
     throw new UnauthorizedException('Invalid token');
 

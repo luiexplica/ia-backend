@@ -1,7 +1,8 @@
 
 import { createParamDecorator, ExecutionContext, InternalServerErrorException } from "@nestjs/common";
+import { Session_Auth_I } from "../interfaces/auth.interface";
 
-export const User_Auth = createParamDecorator( (data: unknown, ctx: ExecutionContext) => {
+export const User_Auth = createParamDecorator( (data: unknown, ctx: ExecutionContext): Session_Auth_I => {
 
         const request = ctx.switchToHttp().getRequest();
 

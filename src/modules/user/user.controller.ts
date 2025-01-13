@@ -1,6 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Session_Auth_I } from './../auth/interfaces/auth.interface';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
+import { Auth, Auth_AdminOrSupport, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
+import { User_Auth } from '@auth/decorators/user-auth.decorator';
+import { UpdateUser_Dto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -10,11 +13,23 @@ export class UserController {
   }
 
   @Auth_SameIdOrAdmin()
-  // @Auth()
   @Get(':auth_id')
   async getOne(@Param('auth_id', ParseUUIDPipe) id: string) {
     return await this.userService.getOne(id);
   }
+
+  @Auth()
+  @Put()
+  async updateUser( @Body() UpdateUser_Dto: UpdateUser_Dto, @User_Auth() User_Auth: Session_Auth_I ) {
+    return await this.userService.updateUser( UpdateUser_Dto, User_Auth);
+  }
+
+  @Auth_AdminOrSupport()
+  @Get()
+  async getUsers() {
+    return await this.userService.getUsers();
+  }
+
 
 }
 

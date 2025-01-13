@@ -2,10 +2,10 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { AuthRegister_Dto } from './dto/register-user.dto';
 import { EntityManager } from '@mikro-orm/core';
-import { AuthRegister_UseCase } from './useCases/authRegister.use-case';
+import { AuthRegister_UC } from './useCases/authRegister.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { LoginAuth_Dto } from './dto/login-user.dto';
-import { AuthLogin_UseCase } from './useCases/authLogin.use-case';
+import { AuthLogin_UC } from './useCases/authLogin.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
 import { Auth_Ety } from './entities/auth.entity';
@@ -56,7 +56,7 @@ export class AuthService {
 
     try {
 
-      const new_auth = await AuthRegister_UseCase(register, f_em);
+      const new_auth = await AuthRegister_UC(register, f_em);
       f_em.flush();
 
       return CreateResponse({
@@ -89,7 +89,7 @@ export class AuthService {
 
     try {
 
-      let user = await AuthLogin_UseCase(login, f_em);
+      let user = await AuthLogin_UC(login, f_em);
       delete user.password;
       const token = await this.signJWT({
         _id: user._id,
