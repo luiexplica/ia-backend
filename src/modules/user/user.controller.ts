@@ -1,9 +1,10 @@
 import { Session_Auth_I } from './../auth/interfaces/auth.interface';
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth, Auth_AdminOrSupport, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { UpdateUser_Dto } from './dto/update-user.dto';
+import { Pagination_Dto } from '../../core/dto/pagination.dto';
 
 @Controller('user')
 export class UserController {
@@ -24,10 +25,11 @@ export class UserController {
     return await this.userService.updateUser( UpdateUser_Dto, User_Auth);
   }
 
-  @Auth_AdminOrSupport()
+  // @Auth_AdminOrSupport()
   @Get()
-  async getUsers() {
-    return await this.userService.getUsers();
+  async getUsers(  @Query() paginationDto: Pagination_Dto, ) {
+    console.log('paginationDto', paginationDto);
+    return await this.userService.getUsers(paginationDto);
   }
 
 

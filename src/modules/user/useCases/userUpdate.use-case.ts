@@ -16,7 +16,7 @@ export const UserUpdate_UC = async (user_id: string, UpdateUser_Dto: UpdateUser_
 
   const updated_user = await repository.update_user({ find: user, update: UpdateUser_Dto, _em: em });
 
-  return UpdateUser_Dto;
+  return updated_user;
 
 }
 

@@ -89,14 +89,14 @@ export class AuthService {
 
     try {
 
-      let user = await AuthLogin_UC(login, f_em);
-      delete user.password;
+      let auth = await AuthLogin_UC(login, f_em);
+      delete auth.password;
       const token = await this.signJWT({
-        _id: user._id,
-        email: user.email,
-        role: user.role,
-        user: user._id,
-        username: user.username ?? '',
+        _id: auth._id,
+        email: auth.email,
+        role: auth.role,
+        user: auth.user._id,
+        username: auth.username ?? '',
       });
 
       f_em.flush();
@@ -104,7 +104,7 @@ export class AuthService {
       return CreateResponse({
         ok: true,
         data: {
-          ...user,
+          ...auth,
           token
         },
         message: 'Usuario logueado correctamente',

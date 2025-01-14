@@ -8,6 +8,7 @@ import { CreateResponse } from '../../core/helpers/createResponse';
 import { Session_Auth_I } from '../auth/interfaces/auth.interface';
 import { UserUpdate_UC } from './useCases/userUpdate.use-case';
 import { UserGetAll_UC } from './useCases/userGetAll.use-case';
+import { Pagination_Dto } from '../../core/dto/pagination.dto';
 
 @Injectable()
 export class UserService {
@@ -53,6 +54,7 @@ export class UserService {
     try {
 
       const user = await UserUpdate_UC(Auth_user.user, UpdateUser_Dto, f_em);
+      f_em.flush();
 
       return CreateResponse({
         ok: true,
@@ -70,15 +72,21 @@ export class UserService {
 
   }
 
-  async getUsers() {
+  async getUsers(paginationDto: Pagination_Dto) {
 
     const f_em = this.em.fork();
 
     try {
 
-      const users = UserGetAll_UC(f_em);
+      const users = await UserGetAll_UC( paginationDto, f_em);
 
-
+      return CreateResponse({
+        ok: true,
+        statusCode: 200,
+        message: 'Usuarios encontrados correctamente',
+        data: users.data,
+        paginator: users.meta
+      });
 
     } catch (error) {
 

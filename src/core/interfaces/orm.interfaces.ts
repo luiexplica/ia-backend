@@ -1,5 +1,6 @@
 
-import { EntityManager, FilterQuery, FindOneOptions, FindOptions } from "@mikro-orm/core";
+import { EntityManager, FilterQuery, FindOneOptions, FindOptions, PopulatePath } from "@mikro-orm/core";
+import { Pagination_Dto } from "../dto/pagination.dto";
 
 export interface _Find_One_I<T extends object, J extends string> {
   find: FilterQuery<T>,
@@ -7,9 +8,10 @@ export interface _Find_One_I<T extends object, J extends string> {
   _em?: EntityManager
 }
 
-export interface _Find_Many_I<T extends object, J extends string> {
+export interface _Find_Many_I<T extends object> {
   find: FilterQuery<T>,
-  options?: FindOptions<T, J>,
+  options?: FindOptions<T>,
+  pagination?: Pagination_Dto,
   _em?: EntityManager
 }
 

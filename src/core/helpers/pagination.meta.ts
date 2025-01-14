@@ -1,3 +1,4 @@
+import { Pagination_Dto } from "@core/dto/pagination.dto";
 
 export interface PaginationMeta_I {
   page: number;
@@ -8,7 +9,7 @@ export interface PaginationMeta_I {
   hasNext: boolean;
 }
 
-export function pagination_meta(page: number, limit: number, total: number): PaginationMeta_I {
+export function Pagination_meta(page: number, limit: number, total: number): PaginationMeta_I {
 
   const lastPage = Math.ceil(total / limit);
   const hasPrevious = page > 1;

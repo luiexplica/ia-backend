@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager, EntityRepository, RequiredEntityData } from '@mikro-orm/postgresql';
+import { EntityManager, EntityRepository, PopulatePath, RequiredEntityData } from '@mikro-orm/postgresql';
 
-import { Pagination_I, pagination_meta } from '@core/helpers/pagination.meta';
+import { Pagination_I, Pagination_meta } from '@core/helpers/pagination.meta';
 import { _Process_Save_I, _Find_Many_I, _Process_Delete_I, _Process_Update_I } from '@core/interfaces/orm.interfaces';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
 import { User_Ety } from './user.entity';
@@ -25,16 +25,16 @@ export class User_ormRepository extends EntityRepository<User_Ety> {
 
   }
 
-  async find_all({ find, options, _em }: _Find_Many_I<User_Ety, 'User_Ety'>, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
+  async find_all({ find, options, pagination, _em }: _Find_Many_I<User_Ety>): Promise<Pagination_I<User_Ety>> {
 
-    if (!Pagination_Dto) {
+    if (!pagination) {
       return {
         data: await this.find(find, options),
         meta: null
       };
     }
 
-    const { page, limit } = Pagination_Dto;
+    const { page, limit } = pagination;
 
     const totalRecords = await _em.count(User_Ety, find);
 
@@ -44,7 +44,7 @@ export class User_ormRepository extends EntityRepository<User_Ety> {
       offset: (page - 1) * limit,
     });
 
-    const meta: Pagination_I['meta'] = pagination_meta(page, limit, totalRecords);
+    const meta: Pagination_I['meta'] = Pagination_meta(page, limit, totalRecords);
 
     return {
       data,

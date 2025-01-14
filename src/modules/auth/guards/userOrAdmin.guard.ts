@@ -32,9 +32,9 @@ export class UserOrAdmin_Guard implements CanActivate {
         secret: envs.jwtSecret,
       } );
 
-      const { role, user } = decodedToken;
+      const { role, _id } = decodedToken;
 
-      return this.isValidUserOrAdmin(role, user, auth_id)
+      return this.isValidUserOrAdmin(role, _id, auth_id)
 
     } catch (error) {
 
@@ -45,6 +45,10 @@ export class UserOrAdmin_Guard implements CanActivate {
   }
 
   isValidUserOrAdmin(role: User_Role_Enum, user: string, auth_id: string): boolean {
+
+    console.log('role', role)
+    console.log('user', user)
+    console.log('auth_id', auth_id)
 
     if (role === User_Role_Enum.ADMIN_ROLE || role === User_Role_Enum.SUPPORT_ROLE) return true;
     if (role === User_Role_Enum.CLIENT_ROLE && user === auth_id) return true;
