@@ -25,7 +25,7 @@ export class User_ormRepository extends EntityRepository<User_Ety> {
 
   }
 
-  async find_all({ find, options, pagination, _em }: _Find_Many_I<User_Ety>): Promise<Pagination_I<User_Ety>> {
+  async find_paginate({ find, options, pagination, _em }: _Find_Many_I<User_Ety>): Promise<Pagination_I<User_Ety>> {
 
     if (!pagination) {
       return {
@@ -35,7 +35,6 @@ export class User_ormRepository extends EntityRepository<User_Ety> {
     }
 
     const { page, limit } = pagination;
-
     const totalRecords = await _em.count(User_Ety, find);
 
     const data = await _em.find(User_Ety, find, {
