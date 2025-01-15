@@ -1,3 +1,4 @@
+import { $Enums } from '@prisma/client';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { extractTokenFromHeader } from "@core/helpers/req.helpers";
 import { JWT_Payload_I } from "../interfaces/jwt-payload.interface";
@@ -32,9 +33,9 @@ export class UserOrAdmin_Guard implements CanActivate {
         secret: envs.jwtSecret,
       } );
 
-      const { role, _id } = decodedToken;
+      const { role, id } = decodedToken;
 
-      return this.isValidUserOrAdmin(role, _id, auth_id)
+      return this.isValidUserOrAdmin(role, id, auth_id)
 
     } catch (error) {
 
@@ -44,11 +45,7 @@ export class UserOrAdmin_Guard implements CanActivate {
 
   }
 
-  isValidUserOrAdmin(role: User_Role_Enum, user: string, auth_id: string): boolean {
-
-    console.log('role', role)
-    console.log('user', user)
-    console.log('auth_id', auth_id)
+  isValidUserOrAdmin(role: User_Role_Enum | $Enums.User_Role_Enum, user: string, auth_id: string): boolean {
 
     if (role === User_Role_Enum.ADMIN_ROLE || role === User_Role_Enum.SUPPORT_ROLE) return true;
     if (role === User_Role_Enum.CLIENT_ROLE && user === auth_id) return true;

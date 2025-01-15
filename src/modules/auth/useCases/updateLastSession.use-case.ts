@@ -1,14 +1,10 @@
-import { EntityManager } from "@mikro-orm/core";
 import { GetAuthByEmail_UC } from "./getAuthByEmail.use-case";
-import { Auth_Ety } from "@auth/entities/auth.entity";
 import { TempoHandler } from "@core/helpers/TempoHandler";
+import { Auth_Ety, Prisma } from "@prisma/client";
 
+export const UpdateLastSession_UC = async (email: string, prisma: Prisma.TransactionClient) => {
 
-
-export const UpdateLastSession_UC = async (email: string, em: EntityManager): Promise<Auth_Ety> => {
-
-  const user = await GetAuthByEmail_UC(email, em);
-  const repository = em.getRepository(Auth_Ety);
+  const user = await GetAuthByEmail_UC(email, prisma);
 
   if (!user) {
     return;
@@ -16,15 +12,14 @@ export const UpdateLastSession_UC = async (email: string, em: EntityManager): Pr
 
   const lastSession = new TempoHandler().date_now();
 
-  const now_user = await repository.update_auth({
-    find: {
-      _id: user._id
+  const now_user = await prisma.auth_Ety.update({
+    where: {
+      email
     },
-    update: {
-      lastSession
-    },
-    _em: em
-  });
+    data: {
+      last_session: lastSession
+    }
+  })
 
   return now_user;
 

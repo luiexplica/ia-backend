@@ -2,8 +2,9 @@
   "compilerOptions": {
     "paths": {
       "@core/*": ["./src/core/*"],
+      "@db/*": ["./src/database/*"],
       "@auth/*": ["./src/modules/auth/*"],
-      "@user/*": ["./src/modules/user/*"],
+      "@user/*": ["./src/modules/user/*"]
     },
     "module": "commonjs",
     "declaration": true,

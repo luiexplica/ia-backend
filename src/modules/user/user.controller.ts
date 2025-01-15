@@ -9,9 +9,7 @@ import { Pagination_Dto } from '../../core/dto/pagination.dto';
 @Controller('user')
 export class UserController {
 
-  constructor(private readonly userService: UserService) {
-
-  }
+  constructor(private readonly userService: UserService) { }
 
   @Auth_SameIdOrAdmin()
   @Get(':auth_id')

@@ -15,6 +15,5 @@ export interface User_I extends SchemaKey_I {
   phone?: string;
   auth: Auth_I;
   // profile: Profile_I | string;
-
   updated_at?: Date;
 }

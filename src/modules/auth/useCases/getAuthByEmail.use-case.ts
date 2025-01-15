@@ -1,11 +1,21 @@
+import { Auth_Ety, Prisma } from '@prisma/client';
 import { EntityManager } from "@mikro-orm/core";
-import { Auth_Ety } from "@auth/entities/auth.entity";
 
 
-export const GetAuthByEmail_UC = async (email: string, em: EntityManager): Promise<Auth_Ety | null> => {
+export const GetAuthByEmail_UC = async (email: string, prisma: Prisma.TransactionClient) => {
 
-  const repository = em.getRepository(Auth_Ety);
-  const user = await repository.findOne({ email });
-  return user ?? null;
+  const auth = await prisma.auth_Ety.findUnique({
+    where: {
+      email
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+  return auth ?? null;
 
 }

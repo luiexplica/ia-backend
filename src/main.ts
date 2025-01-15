@@ -7,7 +7,6 @@ import { AppModule } from './app.module';
 
 import * as bodyParser from 'body-parser';
 
-
 async function bootstrap() {
 
   const logger = new Logger('IA Backend - Main')

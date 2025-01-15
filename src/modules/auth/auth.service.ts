@@ -1,16 +1,14 @@
+import { PrismaService } from './../../database/prisma/prisma.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { AuthRegister_Dto } from './dto/register-user.dto';
-import { EntityManager } from '@mikro-orm/core';
 import { AuthRegister_UC } from './useCases/authRegister.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { LoginAuth_Dto } from './dto/login-user.dto';
 import { AuthLogin_UC } from './useCases/authLogin.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
-import { Auth_Ety } from './entities/auth.entity';
-
-
+import { envs } from '../../core/config/envs';
 @Injectable()
 export class AuthService {
 
@@ -18,60 +16,34 @@ export class AuthService {
   ExceptionsHandler = new ExceptionsHandler();
 
   constructor(
-    private readonly em: EntityManager,
     private readonly jwtService: JwtService,
+    private readonly prismaService: PrismaService
   ) {
 
   }
 
-  // async delete(id: string) {
-
-  //   const f_em = this.em.fork();
-
-  //   try {
-
-  //     const auth = await f_em.findOne(Auth_Ety, { _id: id });
-  //     await f_em.remove(auth);
-
-  //     f_em.flush();
-
-  //     return CreateResponse({
-  //       ok: true,
-  //       message: 'Usuario eliminado correctamente',
-  //       statusCode: HttpStatus.OK,
-  //     })
-
-  //   } catch (error) {
-
-  //     this.logger.error(`[Auth Delete] Error: ${error}`);
-  //     this.ExceptionsHandler.EmitException(error, 'AuthService.delete');
-
-  //   }
-
-  // }
-
   async register(register: AuthRegister_Dto) {
 
-    const f_em = this.em.fork();
-
+    // const f_em = this.em.fork();
     try {
 
-      const new_auth = await AuthRegister_UC(register, f_em);
-      f_em.flush();
+      const new_auth = await this.prismaService.$transaction(async (prisma) => {
+        const new_auth = await AuthRegister_UC(register, prisma);
+        return new_auth;
+      });
 
-      return CreateResponse({
-        ok: true,
-        data: {
-          ...new_auth,
-          password: '****'
-        },
-        message: 'Usuario creado correctamente',
-        statusCode: HttpStatus.CREATED,
-      })
+        return CreateResponse({
+          ok: true,
+          data: {
+            ...new_auth,
+            password: '****'
+          },
+          message: 'Usuario creado correctamente',
+          statusCode: HttpStatus.CREATED,
+        })
 
     } catch (error) {
 
-      console.log('sale poracá', error);
       this.logger.error(`[Auth Register] Error: ${error}`);
       this.ExceptionsHandler.EmitException(error, 'AuthService.register');
 
@@ -83,23 +55,49 @@ export class AuthService {
     return this.jwtService.sign(payload)
   }
 
-  async login(login: LoginAuth_Dto) {
+  async renewToken(token: string) {
 
-    const f_em = this.em.fork();
+        try {
+
+            const { sub, iat, exp, ...user } = this.jwtService.verify(token, {
+                secret: envs.jwtSecret
+            });
+
+            return CreateResponse({
+                ok: true,
+                statusCode: HttpStatus.OK,
+                message: 'Token verificado',
+                data: {
+                    ...user,
+                    token: await this.signJWT(user)
+                },
+            })
+
+        } catch (error) {
+
+            this.logger.error(`[ Renew token ] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, 'AuthService.renewToken');
+
+        }
+
+  }
+
+  async login(login: LoginAuth_Dto) {
 
     try {
 
-      let auth = await AuthLogin_UC(login, f_em);
+      let auth = await this.prismaService.$transaction( async (prisma) => {
+        return await AuthLogin_UC(login, prisma);
+      } );
+
       delete auth.password;
       const token = await this.signJWT({
-        _id: auth._id,
+        id: auth.id,
         email: auth.email,
         role: auth.role,
-        user: auth.user._id,
+        user: auth.user.id,
         username: auth.username ?? '',
       });
-
-      f_em.flush();
 
       return CreateResponse({
         ok: true,

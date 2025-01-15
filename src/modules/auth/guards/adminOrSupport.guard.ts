@@ -1,3 +1,4 @@
+import { $Enums } from '@prisma/client';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { extractTokenFromHeader } from "@core/helpers/req.helpers";
 import { JWT_Payload_I } from "../interfaces/jwt-payload.interface";
@@ -43,7 +44,7 @@ export class AdminOrSupport_Guard implements CanActivate {
 
   }
 
-  isValidAdmin(role: User_Role_Enum): boolean {
+  isValidAdmin(role: User_Role_Enum | $Enums.User_Role_Enum): boolean {
 
     if (role === User_Role_Enum.ADMIN_ROLE || role === User_Role_Enum.SUPPORT_ROLE) return true;
 

@@ -1,5 +1,6 @@
 
 import { SchemaKey_I } from '@core/interfaces/index';
+import { User_I } from '@user/interfaces/user.interface';
 
 export enum AuthStatus_Enum {
   VERIFIED = "VERIFIED",
@@ -29,8 +30,8 @@ export interface Auth_I extends SchemaKey_I {
 
   status?: AuthStatus_Enum;
   role: User_Role_Enum;
-  // user: User_I | string;
-
+  user?: User_I;
+  user_id?: string;
   // requests?: Requests_I[]
 
 }

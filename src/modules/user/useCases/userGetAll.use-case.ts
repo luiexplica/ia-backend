@@ -1,24 +1,15 @@
-import { EntityManager, Populate } from "@mikro-orm/core";
+import { Prisma } from '@prisma/client';
 import { User_Ety } from "@user/entities/user.entity";
 import { handlerNoResults } from "@core/helpers/handlerNoResults";
-import { Pagination_I } from "@core/helpers/pagination.meta";
 import { Pagination_Dto } from "@core/dto/pagination.dto";
+import { PrismaService } from '../../../database/prisma/prisma.service';
 
-export const UserGetAll_UC = async ( Pagination_Dto: Pagination_Dto, em: EntityManager): Promise<Pagination_I<User_Ety>> => {
+export const UserGetAll_UC = async ( Pagination_Dto: Pagination_Dto, prisma: PrismaService) => {
 
-  const repository = em.getRepository(User_Ety);
-
-  repository.find({}, {
-    populate: ['auth', 'auth.user']
-  })
-
-  const users = await repository.find_paginate({
-    find: {},
-    pagination: {
-      ...Pagination_Dto
-    },
-    _em: em
-  });
+  const users = await prisma.find_pagination<User_Ety, Prisma.User_EtyFindManyArgs>( {
+    model: prisma.user_Ety,
+    pagination: Pagination_Dto,
+  } );
 
   if(users.data.length === 0){
     handlerNoResults();

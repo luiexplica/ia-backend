@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AuthStatus_Enum {
+  VERIFIED
+  BLOCKED
+  DELETED
+  SUSPENDED
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum User_Role_Enum {
+  ADMIN_ROLE
+  SUPPORT_ROLE
+  CLIENT_ROLE
+}
+
+model Auth_Ety {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  password     String
+  username     String?         @unique
+  created_at   DateTime?
+  updated_at   DateTime?
+  last_session DateTime?
+  status       AuthStatus_Enum @default(PENDING)
+  role         User_Role_Enum  @default(CLIENT_ROLE)
+
+  user    User_Ety   @relation(fields: [user_id], references: [id], onDelete: Restrict)
+  user_id String @unique
+
+  @@map("lxia_auth")
+
+}
+
+enum Gender_Enum {
+  MALE
+  FEMALE
+  NONE
+}
+
+model User_Ety {
+  id         String       @id @default(uuid())
+  name       String
+  last_name  String
+  gender     Gender_Enum? @default(NONE)
+  phone      String?
+  updated_at DateTime?
+
+  auth Auth_Ety?
+
+  @@map("lxia_user")
+
+}

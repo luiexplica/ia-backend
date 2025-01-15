@@ -1,10 +1,9 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { AuthRegister_Dto } from "../dto/register-user.dto";
-import { EntityManager } from "@mikro-orm/core";
-import { Auth_Ety } from "../entities/auth.entity";
-import * as bcrypt from 'bcrypt';
 import { CreateResponse } from "@core/helpers/createResponse";
 import { GetAuthByEmail_UC } from "./getAuthByEmail.use-case";
+import { Prisma } from "@prisma/client";
+import * as bcrypt from 'bcrypt';
 
 const isValidRegisterRole = (role: string): void => {
   if (role === 'ADMIN_ROLE') {
@@ -18,9 +17,9 @@ const isValidRegisterRole = (role: string): void => {
   }
 };
 
-const isValidEmailExists = async (email: string, em: EntityManager): Promise<void> => {
+const isValidEmailExists = async (email: string, prisma: Prisma.TransactionClient): Promise<void> => {
 
-  const user = await GetAuthByEmail_UC(email, em);
+  const user = await GetAuthByEmail_UC(email, prisma);
 
   if (user) {
     const resp = CreateResponse({
@@ -34,7 +33,7 @@ const isValidEmailExists = async (email: string, em: EntityManager): Promise<voi
 
 }
 
-export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, em: EntityManager): Promise<AuthRegister_Dto> => {
+export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma: Prisma.TransactionClient): Promise<AuthRegister_Dto> => {
 
   const {
     name,
@@ -44,23 +43,23 @@ export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, em: En
     role
   } = AuthRegister_Dto;
 
-  await isValidEmailExists(email, em);
+  await isValidEmailExists(email, prisma);
   isValidRegisterRole(role);
 
-  const repository = em.getRepository(Auth_Ety);
-
-  await repository.create_auth({
-    save: {
+  const auth = await prisma.auth_Ety.create({
+    data: {
       email,
       role,
       password: bcrypt.hashSync(password, 10),
       user: {
-        name,
-        last_name,
+        create: {
+          name,
+          last_name,
+
+        }
       }
-    },
-    _em: em
-  });
+    }
+  })
 
   return AuthRegister_Dto;
 

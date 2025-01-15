@@ -39,7 +39,7 @@ export class Auth_Guard implements CanActivate {
       const auth = user;
 
       request['auth_user'] = {
-        _id: auth._id,
+        id: auth.id,
         email: auth.email,
         status: auth.status,
         role: auth.role,

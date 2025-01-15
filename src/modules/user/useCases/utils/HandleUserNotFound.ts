@@ -6,7 +6,7 @@ export const handleUserNotFound = () => {
   const resp = CreateResponse({
     ok: false,
     data: null,
-    statusCode: HttpStatus.BAD_REQUEST,
+    statusCode: HttpStatus.NOT_FOUND,
     message: 'El usuario no existe',
   });
   throw new HttpException(resp, resp.statusCode);
