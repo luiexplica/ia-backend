@@ -13,6 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/**
+ * ---------------------------- Auth declarations ---------------------------
+ */
+
 enum AuthStatus_Enum {
   VERIFIED
   BLOCKED
@@ -40,12 +44,56 @@ model Auth_Ety {
   status       AuthStatus_Enum @default(PENDING)
   role         User_Role_Enum  @default(CLIENT_ROLE)
 
-  user    User_Ety   @relation(fields: [user_id], references: [id], onDelete: Restrict)
-  user_id String @unique
+  user    User_Ety @relation(fields: [user_id], references: [id], onDelete: Restrict)
+  user_id String   @unique
+
+  account_requests AccountRequests_Ety[]
 
   @@map("lxia_auth")
-
 }
+
+/**
+ * --------------------------------------------------------------------------
+ */
+
+/**
+ * ---------------------- Account requests declarations ---------------------
+ */
+
+enum RequestType_Enum {
+  CONFIRM_ACCOUNT
+  RESET_PASSWORD
+  CHANGE_EMAIL
+}
+
+enum RequestStatus_Enum {
+  PENDING
+  USED
+  EXPIRED
+}
+
+model AccountRequests_Ety {
+  id         String             @id @default(uuid())
+  key        String
+  type       RequestType_Enum
+  status     RequestStatus_Enum @default(PENDING)
+  detail     String?
+  created_at DateTime?
+  used_at    DateTime?
+
+  auth    Auth_Ety? @relation(fields: [auth_id], references: [id], onDelete: Cascade)
+  auth_id String?
+
+  @@map("lxia_account_requests")
+}
+
+/**
+ * --------------------------------------------------------------------------
+ */
+
+/**
+ * ---------------------------- User declarations ---------------------------
+ */
 
 enum Gender_Enum {
   MALE
@@ -64,5 +112,8 @@ model User_Ety {
   auth Auth_Ety?
 
   @@map("lxia_user")
-
 }
+
+/**
+ * --------------------------------------------------------------------------
+ */

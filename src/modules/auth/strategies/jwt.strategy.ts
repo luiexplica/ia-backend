@@ -2,15 +2,15 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-import { Auth_ormRepository } from '@auth/entities/auth.repository.service';
 import { JWT_Payload_I } from '@auth/interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
+import { PrismaService } from '@db/prisma/prisma.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
   constructor(
-    private readonly _AuthRepositoryService: Auth_ormRepository
+    private readonly prismaService: PrismaService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,9 +22,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     const { email } = payload;
 
-    const user = await this._AuthRepositoryService.findOne({ email });
+    const auth = await this.prismaService.auth_Ety.findFirst({
+      where: {
+        email
+      }
+    })
 
-    if (!user) {
+    if (!auth) {
       throw new UnauthorizedException();
     }
 

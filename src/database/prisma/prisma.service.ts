@@ -20,10 +20,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         if (params.args.data) {
           const date = new TempoHandler().date_now();
           if (params.action === 'create' && params.args.data.created_at === undefined) {
-            params.args.data.created_at = date
+            if(params.args.data?.created_at) params.args.data.created_at = date
           }
           if (['create', 'update', 'upsert'].includes(params.action)) {
-            params.args.data.updated_at = date
+            if(params.args.data?.updated_at) params.args.data.updated_at = date
+
           }
         }
       }

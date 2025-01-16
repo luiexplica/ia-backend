@@ -1,8 +1,9 @@
 
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Response_I } from "@core/interfaces/response.interface";
 import { CreateResponse } from "./createResponse";
 
+@Injectable()
 export class ExceptionsHandler {
 
   constructor() {

@@ -15,11 +15,10 @@ import { PrismaService } from '@db/prisma/prisma.service';
 export class UserService {
 
   private readonly logger = new Logger('UserService');
-  ExceptionsHandler = new ExceptionsHandler();
 
   constructor(
-    private readonly em: EntityManager,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly exceptionsHandler: ExceptionsHandler
 
   ) {
 
@@ -41,7 +40,7 @@ export class UserService {
     } catch (error) {
 
       this.logger.error(`[User Get One] Error: ${error}`);
-      this.ExceptionsHandler.EmitException(error, 'UserService.getOne');
+      this.exceptionsHandler.EmitException(error, 'UserService.getOne');
 
     }
 
@@ -66,7 +65,7 @@ export class UserService {
     } catch (error) {
 
       this.logger.error(`[User Update] Error: ${error}`);
-      this.ExceptionsHandler.EmitException(error, 'UserService.updateUser');
+      this.exceptionsHandler.EmitException(error, 'UserService.updateUser');
 
     }
 
@@ -89,7 +88,7 @@ export class UserService {
     } catch (error) {
 
       this.logger.error(`[User Get Users] Error: ${error}`);
-      this.ExceptionsHandler.EmitException(error, 'UserService.getUsers');
+      this.exceptionsHandler.EmitException(error, 'UserService.getUsers');
 
     }
 

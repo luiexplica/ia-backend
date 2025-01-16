@@ -1,8 +1,8 @@
 import { $Enums } from '@prisma/client';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { extractTokenFromHeader } from "@core/helpers/req.helpers";
-import { JWT_Payload_I } from "../interfaces/jwt-payload.interface";
-import { User_Role_Enum } from "../interfaces/auth.interface";
+import { JWT_Payload_I } from "@auth/interfaces/jwt-payload.interface";
+import { User_Role_Enum } from "@auth/interfaces/auth.interface";
 
 import { JwtService } from "@nestjs/jwt";
 import { envs } from "@core/config/envs";

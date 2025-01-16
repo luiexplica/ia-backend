@@ -3,6 +3,7 @@
     "paths": {
       "@core/*": ["./src/core/*"],
       "@db/*": ["./src/database/*"],
+      "@ac-requests/*": ["./src/modules/account-requests/*"],
       "@auth/*": ["./src/modules/auth/*"],
       "@user/*": ["./src/modules/user/*"]
     },

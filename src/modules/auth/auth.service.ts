@@ -13,11 +13,11 @@ import { envs } from '../../core/config/envs';
 export class AuthService {
 
   private readonly logger = new Logger('AuthService');
-  ExceptionsHandler = new ExceptionsHandler();
 
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly exceptionsHandler: ExceptionsHandler
   ) {
 
   }
@@ -45,7 +45,7 @@ export class AuthService {
     } catch (error) {
 
       this.logger.error(`[Auth Register] Error: ${error}`);
-      this.ExceptionsHandler.EmitException(error, 'AuthService.register');
+      this.exceptionsHandler.EmitException(error, 'AuthService.register');
 
     }
 
@@ -76,7 +76,7 @@ export class AuthService {
         } catch (error) {
 
             this.logger.error(`[ Renew token ] Error: ${error}`);
-            this.ExceptionsHandler.EmitException(error, 'AuthService.renewToken');
+            this.exceptionsHandler.EmitException(error, 'AuthService.renewToken');
 
         }
 
@@ -112,7 +112,7 @@ export class AuthService {
     } catch (error) {
 
       this.logger.error(`[Auth Login] Error: ${error}`);
-      this.ExceptionsHandler.EmitException(error, 'AuthService.login');
+      this.exceptionsHandler.EmitException(error, 'AuthService.login');
 
     }
 

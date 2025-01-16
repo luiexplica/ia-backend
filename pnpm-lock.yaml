@@ -62,6 +62,9 @@ importers:
       joi:
         specifier: ^17.13.3
         version: 17.13.3
+      keygen:
+        specifier: ^0.4.0
+        version: 0.4.0
       passport:
         specifier: ^0.7.0
         version: 0.7.0
@@ -2624,6 +2627,9 @@ packages:
 
   jws@3.2.2:
     resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
+
+  keygen@0.4.0:
+    resolution: {integrity: sha512-Fam+Q+CaIsVWneZCBYfea6SQSTEHE4mU8bkqkT7eDOWhLEgOhDZvADDxi6q6dFLtWbeWJ9Z8YgVhBW5WhkH7Xw==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -6896,6 +6902,8 @@ snapshots:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
+
+  keygen@0.4.0: {}
 
   keyv@4.5.4:
     dependencies:
