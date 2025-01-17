@@ -15,7 +15,7 @@ export class TempoHandler {
       format: "YYYY-MM-DDTHH:mm:ssZ",
       tz: "America/Caracas",
     });
-    return c;
+    return c as any;
 
   }
 

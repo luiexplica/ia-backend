@@ -4,6 +4,8 @@ import { AccountRequestsController } from './account-requests.controller';
 
 @Module({
   controllers: [AccountRequestsController],
-  providers: [AccountRequestsService],
+  providers: [
+    AccountRequestsService
+  ],
 })
-export class AccountRequestsModule {}
+export class AccountRequestsModule { }

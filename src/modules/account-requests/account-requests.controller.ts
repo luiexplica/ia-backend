@@ -3,8 +3,9 @@ import { AccountRequestsService } from './account-requests.service';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
 import { Create_Request_Key_Dto } from './dto/create-request-key.dto';
-import { Auth } from '../auth/decorators/auth.decorator';
+import { Auth } from '@auth/decorators/auth.decorator';
 import { Create_Password_Request_Dto } from './dto/create-password-request.dto';
+import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
 
 @Controller('account-requests')
 export class AccountRequestsController {
@@ -36,23 +37,13 @@ export class AccountRequestsController {
       return await this.accountRequestsService.verify_request(key);
     }
 
-
   //   @ApiOperation({ summary: 'Verificar solicitud de cambio de contraseña' })
-  //   @Put('verify_pass/:key')
-  //   verify_pass_request(
-  //       @Param('key') key: string,
-  //       @Body() Accept_Password_Request_Dto: Accept_Password_Request_Dto
-  //   ) {
-
-  //       return this.client.send('auth.requests.verify_pass', {
-  //           key,
-  //           data: Accept_Password_Request_Dto
-  //       }).pipe(
-  //           catchError(err => {
-  //               throw new RpcException(err)
-  //           })
-  //       )
-
-  //   }
+    @Put('verify_pass/:key')
+    async verify_pass_request(
+        @Param('key') key: string,
+        @Body() Accept_Password_Request_Dto: Accept_Password_Request_Dto
+    ) {
+      return await this.accountRequestsService.verify_pass_request(key, Accept_Password_Request_Dto);
+    }
 
 }

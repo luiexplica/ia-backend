@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { Create_Request_Key_Dto } from "../dto/create-request-key.dto";
+import { Create_Request_Key_Dto } from "@ac-requests/dto/create-request-key.dto";
 
 interface Create_Request_Key_I {
   create: Create_Request_Key_Dto;

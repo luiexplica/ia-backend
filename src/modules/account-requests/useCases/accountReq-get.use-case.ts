@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
-import { CreateResponse } from '../../../core/helpers/createResponse';
+import { CreateResponse } from '@core/helpers/createResponse';
 import { HttpException, HttpStatus } from '@nestjs/common';
-
 
 const isNotExistRequest = () => {
 
@@ -15,12 +14,19 @@ const isNotExistRequest = () => {
 
 }
 
-export const AccountReqGetReq_UC = async (key: string, prisma: Prisma.TransactionClient) => {
+export const AccountReqGet_UC = async (key: string, prisma: Prisma.TransactionClient) => {
 
   const request = await prisma.accountRequests_Ety.findFirst({
     where: {
       key
-    }
+    },
+    // include: {
+    //   auth: {
+    //     select: {
+    //       id: true,
+    //     }
+    //   }
+    // }
   })
 
   if (!request) {

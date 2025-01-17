@@ -1,5 +1,5 @@
 import { Prisma, $Enums } from '@prisma/client';
-import { Create_Password_Request_Dto } from '../dto/create-password-request.dto';
+import { Create_Password_Request_Dto } from '@ac-requests/dto/create-password-request.dto';
 
 interface Create_Request_Key_I {
   create: Create_Password_Request_Dto;
@@ -7,7 +7,7 @@ interface Create_Request_Key_I {
   auth_id: string;
 }
 
-export const AccountReqCreatePassReq_UC = async ({create, key, auth_id}: Create_Request_Key_I, prisma: Prisma.TransactionClient) => {
+export const AccountReqCreatePass_UC = async ({create, key, auth_id}: Create_Request_Key_I, prisma: Prisma.TransactionClient) => {
 
   const request_created = await prisma.accountRequests_Ety.create({
     data: {
