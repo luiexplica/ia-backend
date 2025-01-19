@@ -49,14 +49,13 @@ export async function DeleteOrphansOneToOneMiddleware(prisma: PrismaClient): Pro
             //     [foreignKeyField]: recordBeingDeleted[recordBeingDeleted_Rel]
             //   },
             // });
-
-            // console.log('_x', _x);
-
-            await prisma[relatedModel].delete({
-              where: {
-                [foreignKeyField]: recordBeingDeleted[recordBeingDeleted_Rel],
-              },
-            });
+            setTimeout(async () => {
+              await (prisma[relatedModel] as any).delete({
+                where: {
+                  [foreignKeyField]: recordBeingDeleted[recordBeingDeleted_Rel],
+                },
+              });
+            }, 10);
 
           }
         }

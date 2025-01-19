@@ -15,20 +15,20 @@ const isNotExist = () => {
 
 export const AuthDeleteAccount_UC = async (auth_id: string, prisma: Prisma.TransactionClient) => {
 
-  // const auth = await AuthGetById_UC(auth_id, prisma);
+  const auth = await AuthGetById_UC(auth_id, prisma);
 
-  // if (!auth) {
-  //   isNotExist();
-  // }
+  if (!auth) {
+    isNotExist();
+  }
 
-  await prisma.auth_Ety.deleteMany({
+  // await prisma.auth_Ety.deleteMany({
+  await prisma.auth_Ety.delete({
     where: {
-      // id: auth_id
-      email: 'alvarosego01@gmail.com'
+      id: auth_id
+      // email: 'alvarosego01@gmail.com'
     }
   });
-  console.log('borra');
 
-  // return auth;
+  return auth;
 
 }

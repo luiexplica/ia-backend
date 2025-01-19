@@ -19,7 +19,7 @@ export class AuthController {
     return await this.authService.register(register);
   }
 
-  // @Auth_SameUser()
+  @Auth_SameUser()
   @Delete(':auth_id')
   async delete(@Param('auth_id') auth_id: string) {
     return await this.authService.delete(auth_id);

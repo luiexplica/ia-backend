@@ -24,8 +24,8 @@ export class AuthService {
   }
 
   async delete(auth_id: string) {
-    try {
 
+    try {
 
       const resp = await this.prismaService.$transaction(async (prisma) => {
         return await AuthDeleteAccount_UC(auth_id, prisma);
@@ -35,10 +35,10 @@ export class AuthService {
         ok: true,
         message: 'Usuario eliminado correctamente',
         statusCode: HttpStatus.OK,
-        // data: {
-        //   email: resp.email,
-        //   id: resp.id
-        // }
+        data: {
+          email: resp.email,
+          id: resp.id
+        }
       });
 
     } catch (error) {
@@ -47,11 +47,11 @@ export class AuthService {
       this.exceptionsHandler.EmitException(error, 'AuthService.delete');
 
     }
+
   }
 
   async register(register: AuthRegister_Dto) {
 
-    // const f_em = this.em.fork();
     try {
 
       const new_auth = await this.prismaService.$transaction(async (prisma) => {
