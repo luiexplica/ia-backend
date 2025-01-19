@@ -3,12 +3,8 @@ import { Controller, Post, Body, Get } from '@nestjs/common';
 import { NotificationsService } from './notifications.service';
 import { Auth } from '@auth/decorators/auth.decorator';
 import { Create_Notification_Dto } from './dto/create-notification.dto';
-import { RpcException } from '@nestjs/microservices';
-import { catchError } from 'rxjs';
 import { User_Auth } from '../auth/decorators/user-auth.decorator';
-import { User_I } from '../user/interfaces/user.interface';
 
-@Auth()
 @Controller('notifications')
 export class NotificationsController {
 
@@ -22,6 +18,7 @@ export class NotificationsController {
   }
 
   //  @ApiOperation({ summary: 'Obtener todas las notificaciones de un usuario' })
+  @Auth()
   @Get()
   async get_all(
       @User_Auth() user_auth: Session_Auth_I
