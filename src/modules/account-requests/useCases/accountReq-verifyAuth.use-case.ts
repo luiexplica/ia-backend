@@ -1,9 +1,9 @@
-import { AccountRequests_Ety, Prisma } from '@prisma/client';
-import { CreateResponse } from '../../../core/helpers/createResponse';
+import { accountRequests_Ety, Prisma } from '@prisma/client';
+import { CreateResponse } from '@core/helpers/createResponse';
 import { HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-const confirmAccount = async (request: AccountRequests_Ety, prisma: Prisma.TransactionClient) => {
+const confirmAccount = async (request: accountRequests_Ety, prisma: Prisma.TransactionClient) => {
 
   const updated_auth = await prisma.auth_Ety.updateManyAndReturn({
     where: {
@@ -28,7 +28,7 @@ const confirmAccount = async (request: AccountRequests_Ety, prisma: Prisma.Trans
 
 }
 
-export const changeEmail = (request: AccountRequests_Ety, prisma: Prisma.TransactionClient) => {
+export const changeEmail = (request: accountRequests_Ety, prisma: Prisma.TransactionClient) => {
 
   const updated_auth = prisma.auth_Ety.updateManyAndReturn({
     where: {
@@ -53,7 +53,7 @@ export const changeEmail = (request: AccountRequests_Ety, prisma: Prisma.Transac
 
 }
 
-export const AccountReqAuth_UC = async (request: AccountRequests_Ety, prisma: Prisma.TransactionClient) => {
+export const AccountReqAuth_UC = async (request: accountRequests_Ety, prisma: Prisma.TransactionClient) => {
 
   if(request.type === 'CONFIRM_ACCOUNT') return confirmAccount(request, prisma);
   if(request.type === 'CHANGE_EMAIL') return changeEmail(request, prisma);

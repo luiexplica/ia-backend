@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { AuthRegister_Dto } from "../dto/register-user.dto";
 import { CreateResponse } from "@core/helpers/createResponse";
-import { GetAuthByEmail_UC } from "./getAuthByEmail.use-case";
 import { Prisma } from "@prisma/client";
+import { AuthGetByEmail_UC } from "./authGetByEmail.use-case";
 import * as bcrypt from 'bcrypt';
 
 const isValidRegisterRole = (role: string): void => {
@@ -19,7 +19,7 @@ const isValidRegisterRole = (role: string): void => {
 
 const isValidEmailExists = async (email: string, prisma: Prisma.TransactionClient): Promise<void> => {
 
-  const user = await GetAuthByEmail_UC(email, prisma);
+  const user = await AuthGetByEmail_UC(email, prisma);
 
   if (user) {
     const resp = CreateResponse({

@@ -14,7 +14,7 @@ export interface User_I extends SchemaKey_I {
   gender?: Gender_Enum;
   phone?: string;
   auth?: Auth_I;
-  auth_id?: string;
+  auth_id: string;
   // profile: Profile_I | string;
   updated_at?: Date;
 }

@@ -7,10 +7,10 @@ import { Create_Request_Key_Dto } from '@ac-requests/dto/create-request-key.dto'
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { Create_Password_Request_Dto } from '@ac-requests/dto/create-password-request.dto';
-import { GetAuthByEmail_UC } from '@auth/useCases/getAuthByEmail.use-case';
 import { AccountReqGet_UC } from '@ac-requests/useCases/accountReq-get.use-case';
 import { AccountReqVerify_UC, AccountReqVerifyPass_UC } from './useCases/accountReq-verify.use-case';
 import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
+import { AuthGetByEmail_UC } from '@auth/useCases/authGetByEmail.use-case';
 import * as keygen from 'keygen';
 
 @Injectable()
@@ -61,7 +61,7 @@ export class AccountRequestsService {
 
     try {
 
-      const auth = await GetAuthByEmail_UC(create_request_dto.email, this.prismaService);
+      const auth = await AuthGetByEmail_UC(create_request_dto.email, this.prismaService);
 
       if (auth) {
 
@@ -124,9 +124,8 @@ export class AccountRequestsService {
         return await AccountReqVerify_UC(key, prisma)
       })
 
-      return CreateResponse({
-        ...resp
-      });
+      // return CreateResponse(resp);
+      return resp
 
     } catch (error) {
 

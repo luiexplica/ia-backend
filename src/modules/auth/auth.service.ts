@@ -1,4 +1,4 @@
-import { PrismaService } from './../../database/prisma/prisma.service';
+import { PrismaService } from '@db/prisma/prisma.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { AuthRegister_Dto } from './dto/register-user.dto';
@@ -8,7 +8,8 @@ import { LoginAuth_Dto } from './dto/login-user.dto';
 import { AuthLogin_UC } from './useCases/authLogin.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
-import { envs } from '../../core/config/envs';
+import { envs } from '@core/config/envs';
+import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
 @Injectable()
 export class AuthService {
 
@@ -22,14 +23,39 @@ export class AuthService {
 
   }
 
+  async delete(auth_id: string) {
+    try {
+
+
+      const resp = await this.prismaService.$transaction(async (prisma) => {
+        return await AuthDeleteAccount_UC(auth_id, prisma);
+      })
+
+      return CreateResponse<Partial<typeof resp>>({
+        ok: true,
+        message: 'Usuario eliminado correctamente',
+        statusCode: HttpStatus.OK,
+        // data: {
+        //   email: resp.email,
+        //   id: resp.id
+        // }
+      });
+
+    } catch (error) {
+
+      this.logger.error(`[Auth Delete] Error: ${error}`);
+      this.exceptionsHandler.EmitException(error, 'AuthService.delete');
+
+    }
+  }
+
   async register(register: AuthRegister_Dto) {
 
     // const f_em = this.em.fork();
     try {
 
       const new_auth = await this.prismaService.$transaction(async (prisma) => {
-        const new_auth = await AuthRegister_UC(register, prisma);
-        return new_auth;
+        return await AuthRegister_UC(register, prisma);
       });
 
         return CreateResponse({

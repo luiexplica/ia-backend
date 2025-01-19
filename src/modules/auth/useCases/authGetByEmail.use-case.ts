@@ -1,8 +1,6 @@
-import { Auth_Ety, Prisma } from '@prisma/client';
-import { EntityManager } from "@mikro-orm/core";
+import { Prisma } from '@prisma/client';
 
-
-export const GetAuthByEmail_UC = async (email: string, prisma: Prisma.TransactionClient) => {
+export const AuthGetByEmail_UC = async (email: string, prisma: Prisma.TransactionClient) => {
 
   const auth = await prisma.auth_Ety.findUnique({
     where: {

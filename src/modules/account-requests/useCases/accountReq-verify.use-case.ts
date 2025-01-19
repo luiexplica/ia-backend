@@ -1,4 +1,4 @@
-import { AccountRequests_Ety, Prisma } from '@prisma/client';
+import { accountRequests_Ety, Prisma } from '@prisma/client';
 import { AccountReqGet_UC } from './accountReq-get.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { HttpStatus, HttpException } from '@nestjs/common';
@@ -28,7 +28,7 @@ const isNotPermittedRequest = () => {
   throw new HttpException(resp, resp.statusCode);
 }
 
-const useRequest = async (request: AccountRequests_Ety, prisma: Prisma.TransactionClient) => {
+const useRequest = async (request: accountRequests_Ety, prisma: Prisma.TransactionClient) => {
 
   await prisma.accountRequests_Ety.update({
     where: {

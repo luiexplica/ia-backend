@@ -16,7 +16,7 @@ export interface Requests_I extends SchemaKey_I {
   key: string;
   status: RequestStatus_Enum;
   auth?: Auth_I;
-  auth_id?: string;
+  auth_id: string;
   detail?: string;
   created_at?: Date;
   used_at?: Date;

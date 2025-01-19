@@ -1,10 +1,10 @@
-import { Auth_Ety, Prisma } from '@prisma/client';
+import { auth_Ety, Prisma } from '@prisma/client';
 import { LoginAuth_Dto } from "@auth/dto/login-user.dto";
-import { GetAuthByEmail_UC } from "./getAuthByEmail.use-case";
 import { HttpStatus, HttpException } from "@nestjs/common";
 import { CreateResponse } from "@core/helpers/createResponse";
 import * as bcrypt from 'bcrypt';
 import { UpdateLastSession_UC } from "./updateLastSession.use-case";
+import { AuthGetByEmail_UC } from './authGetByEmail.use-case';
 
 const isValidPassword = async (password: string, authPassword: string) => {
 
@@ -44,7 +44,7 @@ export const AuthLogin_UC = async (login: LoginAuth_Dto, prisma: Prisma.Transact
     password
   } = login;
 
-  const auth = await GetAuthByEmail_UC(email, prisma);
+  const auth = await AuthGetByEmail_UC(email, prisma);
 
   await isValidEmailNotExist(auth);
   await isValidPassword(password, auth.password);

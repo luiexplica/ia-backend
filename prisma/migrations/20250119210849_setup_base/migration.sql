@@ -5,7 +5,16 @@ CREATE TYPE "AuthStatus_Enum" AS ENUM ('VERIFIED', 'BLOCKED', 'DELETED', 'SUSPEN
 CREATE TYPE "User_Role_Enum" AS ENUM ('ADMIN_ROLE', 'SUPPORT_ROLE', 'CLIENT_ROLE');
 
 -- CreateEnum
+CREATE TYPE "RequestType_Enum" AS ENUM ('CONFIRM_ACCOUNT', 'RESET_PASSWORD', 'CHANGE_EMAIL');
+
+-- CreateEnum
+CREATE TYPE "RequestStatus_Enum" AS ENUM ('PENDING', 'USED', 'EXPIRED');
+
+-- CreateEnum
 CREATE TYPE "Gender_Enum" AS ENUM ('MALE', 'FEMALE', 'NONE');
+
+-- CreateEnum
+CREATE TYPE "NotificationState_Enum" AS ENUM ('READ', 'UNREAD');
 
 -- CreateTable
 CREATE TABLE "lxia_auth" (
@@ -24,6 +33,20 @@ CREATE TABLE "lxia_auth" (
 );
 
 -- CreateTable
+CREATE TABLE "lxia_account_requests" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "type" "RequestType_Enum" NOT NULL,
+    "status" "RequestStatus_Enum" NOT NULL DEFAULT 'PENDING',
+    "detail" TEXT,
+    "created_at" TIMESTAMP(3),
+    "used_at" TIMESTAMP(3),
+    "auth_id" TEXT,
+
+    CONSTRAINT "lxia_account_requests_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "lxia_user" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -33,6 +56,19 @@ CREATE TABLE "lxia_user" (
     "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "lxia_user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "lxia_notifications" (
+    "id" SERIAL NOT NULL,
+    "subject" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3),
+    "read_at" TIMESTAMP(3),
+    "state" "NotificationState_Enum" NOT NULL DEFAULT 'UNREAD',
+    "user_id" TEXT,
+
+    CONSTRAINT "lxia_notifications_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -46,3 +82,9 @@ CREATE UNIQUE INDEX "lxia_auth_user_id_key" ON "lxia_auth"("user_id");
 
 -- AddForeignKey
 ALTER TABLE "lxia_auth" ADD CONSTRAINT "lxia_auth_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "lxia_user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "lxia_account_requests" ADD CONSTRAINT "lxia_account_requests_auth_id_fkey" FOREIGN KEY ("auth_id") REFERENCES "lxia_auth"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "lxia_notifications" ADD CONSTRAINT "lxia_notifications_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "lxia_user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

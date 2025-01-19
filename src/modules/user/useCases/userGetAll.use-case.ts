@@ -1,11 +1,11 @@
-import { Prisma, User_Ety } from '@prisma/client';
+import { Prisma, user_Ety } from '@prisma/client';
 import { handlerNoResults } from "@core/helpers/handlerNoResults";
 import { Pagination_Dto } from "@core/dto/pagination.dto";
 import { PrismaService } from '@db/prisma/prisma.service';
 
 export const UserGetAll_UC = async ( Pagination_Dto: Pagination_Dto, prisma: PrismaService) => {
 
-  const users = await prisma.find_pagination<User_Ety, Prisma.User_EtyFindManyArgs>( {
+  const users = await prisma.find_pagination<user_Ety, Prisma.user_EtyFindManyArgs>( {
     model: prisma.user_Ety,
     pagination: Pagination_Dto,
   } );

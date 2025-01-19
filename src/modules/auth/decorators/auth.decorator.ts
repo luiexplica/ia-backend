@@ -3,6 +3,7 @@ import { Auth_Guard } from "@auth/guards/auth.guard";
 import { UserOrAdmin_Guard } from "@auth/guards/userOrAdmin.guard";
 import { Admin_Guard } from "@auth/guards/admin.guard";
 import { AdminOrSupport_Guard } from "@auth/guards/adminOrSupport.guard";
+import { SameUser_Guard } from "@auth/guards/sameUser.guard";
 
 
 export function Auth() {
@@ -10,6 +11,15 @@ export function Auth() {
   return applyDecorators(
 
     UseGuards(Auth_Guard)
+
+  );
+}
+
+export function Auth_SameUser() {
+
+  return applyDecorators(
+
+    UseGuards(Auth_Guard, SameUser_Guard)
 
   );
 }

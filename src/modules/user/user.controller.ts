@@ -1,10 +1,10 @@
-import { Session_Auth_I } from './../auth/interfaces/auth.interface';
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Put, Query } from '@nestjs/common';
+import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Auth, Auth_AdminOrSupport, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
+import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { UpdateUser_Dto } from './dto/update-user.dto';
-import { Pagination_Dto } from '../../core/dto/pagination.dto';
+import { Pagination_Dto } from '@core/dto/pagination.dto';
 
 @Controller('user')
 export class UserController {

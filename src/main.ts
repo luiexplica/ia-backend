@@ -66,6 +66,5 @@ async function bootstrap() {
 
   logger.log(`Server is running on ${await app.getUrl()}`);
 
-
 }
 bootstrap();

@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
     "paths": {
+      "@prismaRoot/*": ["./prisma/*"],
       "@core/*": ["./src/core/*"],
       "@db/*": ["./src/database/*"],
       "@ac-requests/*": ["./src/modules/account-requests/*"],
       "@auth/*": ["./src/modules/auth/*"],
-      "@user/*": ["./src/modules/user/*"]
+      "@user/*": ["./src/modules/user/*"],
+      "@notifications/*": ["./src/modules/notifications/*"]
     },
+    "plugins": [
+      { "transform": "typescript-transform-paths" }
+    ],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -16,7 +21,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

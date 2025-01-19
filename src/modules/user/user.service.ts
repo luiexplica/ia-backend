@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { Injectable, Logger } from '@nestjs/common';
 import { UpdateUser_Dto } from './dto/update-user.dto';
-import { EntityManager } from '@mikro-orm/core';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { UserGetOne_UC } from './useCases/userGetOne.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';

@@ -31,7 +31,7 @@ export interface Auth_I extends SchemaKey_I {
   status?: AuthStatus_Enum;
   role: User_Role_Enum;
   user?: User_I;
-  user_id?: string;
+  user_id: string;
   // requests?: Requests_I[]
 
 }
