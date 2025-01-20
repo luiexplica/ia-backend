@@ -1,9 +1,9 @@
-import { Session_Auth_I } from './../auth/interfaces/auth.interface';
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Controller, Get, Query, Param, ParseIntPipe, Delete } from '@nestjs/common';
 import { NotificationsService } from './notifications.service';
 import { Auth } from '@auth/decorators/auth.decorator';
-import { Create_Notification_Dto } from './dto/create-notification.dto';
-import { User_Auth } from '../auth/decorators/user-auth.decorator';
+import { User_Auth } from '@auth/decorators/user-auth.decorator';
+import { Pagination_Dto } from '@core/dto/pagination.dto';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -12,54 +12,37 @@ export class NotificationsController {
     private readonly notificationsService: NotificationsService
   ) { }
 
-  @Post()
-  async create(@Body() create_notification: Create_Notification_Dto) {
-    console.log('llega aqui')
-    return await this.notificationsService.create(create_notification);
-  }
+  // @Post()
+  // async create(@Body() create_notification: Create_Notification_Dto) {
+  //   return await this.notificationsService.create(create_notification);
+  // }
 
   //  @ApiOperation({ summary: 'Obtener todas las notificaciones de un usuario' })
   @Auth()
   @Get()
   async get_all(
+      @Query() paginationDto: Pagination_Dto,
       @User_Auth() user_auth: Session_Auth_I
   ) {
-
-
+    return await this.notificationsService.get_all(user_auth, paginationDto);
   }
 
-  //     @ApiOperation({ summary: 'Definir una notificación como leida' })
-  // @Put(':id')
-  // read_notification(
-  //     @Param('id', ParseUUIDPipe) _id: string,
-  //     @User_Auth() user_auth: User_I
-  // ) {
+  @Auth()
+  @Get(':id')
+  async read_notification(
+     @Param('id', ParseIntPipe) id: number,
+      @User_Auth() user_auth: Session_Auth_I
+  ) {
+    return await this.notificationsService.read_notification(id, user_auth);
+  }
 
-  //     return this.client.send('notifications.read', {
-  //         _id,
-  //         user_auth
-  //     }).pipe(
-  //         catchError(err => {
-  //             throw new RpcException(err)
-  //         })
-  //     )
-  // }
-
-  //     @ApiOperation({ summary: 'Eliminar una notificación' })
-  // @Delete(':id')
-  // delete_notification(
-  //     @Param('id', ParseUUIDPipe) _id: string,
-  //     @User_Auth() user_auth: User_I
-  // ) {
-
-  //     return this.client.send('notifications.delete', {
-  //         _id,
-  //         user_auth
-  //     }).pipe(
-  //         catchError(err => {
-  //             throw new RpcException(err)
-  //         })
-  //     )
-  // }
+  @Auth()
+  @Delete(':id')
+  async delete_notification(
+      @Param('id', ParseIntPipe) id: number,
+      @User_Auth() user_auth: Session_Auth_I
+  ) {
+    return await this.notificationsService.delete_notification(id, user_auth);
+  }
 
 }

@@ -43,7 +43,7 @@ export class AuthService {
 
     } catch (error) {
 
-      this.logger.error(`[Auth Delete] Error: ${error}`);
+      this.logger.error(`[Auth Delete] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AuthService.delete');
 
     }
@@ -70,7 +70,7 @@ export class AuthService {
 
     } catch (error) {
 
-      this.logger.error(`[Auth Register] Error: ${error}`);
+      this.logger.error(`[Auth Register] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AuthService.register');
 
     }
@@ -101,7 +101,7 @@ export class AuthService {
 
         } catch (error) {
 
-            this.logger.error(`[ Renew token ] Error: ${error}`);
+            this.logger.error(`[ Renew token ] Error: `, error);
             this.exceptionsHandler.EmitException(error, 'AuthService.renewToken');
 
         }
@@ -137,7 +137,7 @@ export class AuthService {
 
     } catch (error) {
 
-      this.logger.error(`[Auth Login] Error: ${error}`);
+      this.logger.error(`[Auth Login] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AuthService.login');
 
     }

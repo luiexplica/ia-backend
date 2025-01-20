@@ -10,13 +10,15 @@ export class TempoHandler {
     //   tz: "America/Caracas",
     // });
 
-    const c = format({
-      date: new Date(),
-      format: "YYYY-MM-DDTHH:mm:ssZ",
-      tz: "America/Caracas",
-    });
-    console.log(c);
-    return c as any;
+    // const c = format({
+    //   date: new Date(),
+    //   format: "YYYY-MM-DDTHH:mm:ssZ",
+    //   tz: "America/Caracas",
+    // });
+    // console.log(c);
+    // return c as any;
+
+    return new Date();
 
   }
 

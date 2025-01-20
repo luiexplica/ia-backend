@@ -4,7 +4,11 @@ import { Create_Notification_Dto } from './dto/create-notification.dto';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { PrismaService } from '@db/prisma/prisma.service';
 import { CreateResponse } from '../../core/helpers/createResponse';
-import { NotificationsCreate_UC } from './useCases/notifications-create.use-case';
+import { NotificationsCreate_UC } from './useCases/notificationsCreate.use-case';
+import { NotificationsGetAll_UC } from './useCases/notificationsGetAll.use-case';
+import { Pagination_Dto } from '../../core/dto/pagination.dto';
+import { NotificationsRead_UC } from './useCases/notificationsRead.use-case';
+import { DeleteNotification_UC } from './useCases/notificationsDelete.use-case';
 
 @Injectable()
 export class NotificationsService {
@@ -23,8 +27,6 @@ export class NotificationsService {
 
     try {
 
-      console.log('create_notification', create_notification);
-
       const resp = await this.prismaService.$transaction(async (prisma) => {
         return NotificationsCreate_UC(create_notification, prisma);
       });
@@ -37,19 +39,73 @@ export class NotificationsService {
       })
 
     } catch (error) {
-      this.logger.error(`[Notification Create] Error: ${error}`);
+      this.logger.error(`[Notification Create] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'NotificationsService.create');
     }
 
-   }
+  }
 
-  async get_all(user_auth: Session_Auth_I) {
+  async get_all(user_auth: Session_Auth_I, pagination: Pagination_Dto) {
 
     try {
 
+      const notifications = await NotificationsGetAll_UC(user_auth.user, pagination, this.prismaService);
+
+      return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.OK,
+        message: 'Notifications found',
+        data: notifications.data,
+        paginator: notifications.meta
+      })
+
     } catch (error) {
-      this.logger.error(`[Notification Get All] Error: ${error}`);
+      this.logger.error(`[Notification Get All] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'NotificationsService.get_all');
+    }
+
+  }
+
+  async read_notification(id: number, user_auth: Session_Auth_I) {
+
+    try {
+
+      const notification = await this.prismaService.$transaction(async (prisma) => {
+        return await NotificationsRead_UC(id, user_auth.user, prisma);
+      });
+
+      return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.OK,
+        message: 'Notificación leida',
+        data: notification
+      })
+
+    } catch (error) {
+      this.logger.error(`[Notification Read] Error: `, error);
+      this.exceptionsHandler.EmitException(error, 'NotificationsService.read_notification');
+    }
+
+  }
+
+  async delete_notification(id: number, user_auth: Session_Auth_I) {
+
+    try {
+
+      const notification = await this.prismaService.$transaction(async (prisma) => {
+        return await DeleteNotification_UC(id, user_auth.user, prisma);
+      });
+
+      return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.OK,
+        message: 'Notificación eliminada',
+        data: notification
+      });
+
+    } catch (error) {
+      this.logger.error(`[Notification Delete] Error: `, error);
+      this.exceptionsHandler.EmitException(error, 'NotificationsService.delete_notification');
     }
 
   }

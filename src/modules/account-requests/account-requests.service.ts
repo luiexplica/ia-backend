@@ -50,7 +50,7 @@ export class AccountRequestsService {
 
     } catch (error) {
 
-      this.logger.error(`[Create request by auth] Error: ${error}`);
+      this.logger.error(`[Create request by auth] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AccountRequestsService.create_requestByAuth');
 
     }
@@ -85,7 +85,7 @@ export class AccountRequestsService {
 
     } catch (error) {
 
-      this.logger.error(`[Create password request] Error: ${error}`);
+      this.logger.error(`[Create password request] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AccountRequestsService.create_password_request');
 
     }
@@ -109,7 +109,7 @@ export class AccountRequestsService {
 
     } catch (error) {
 
-      this.logger.error(`[Get request] Error: ${error}`);
+      this.logger.error(`[Get request] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AccountRequestsService.get_request');
 
     }
@@ -129,7 +129,7 @@ export class AccountRequestsService {
 
     } catch (error) {
 
-      this.logger.error(`[Verify request] Error: ${error}`);
+      this.logger.error(`[Verify request] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AccountRequestsService.verify_request');
 
     }
@@ -153,7 +153,7 @@ export class AccountRequestsService {
 
     } catch (error) {
 
-      this.logger.error(`[Verify pass request] Error: ${error}`);
+      this.logger.error(`[Verify pass request] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AccountRequestsService.verify_pass_request');
 
     }

@@ -18,8 +18,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   }
 
   async setupMiddlewares() {
-    const autoDate_middleware = await AutoDateMiddleware(this);
-    this.$use(autoDate_middleware);
+    // const autoDate_middleware = await AutoDateMiddleware(this);
+    // this.$use(autoDate_middleware);
     const deleteOrphan_middleware = await DeleteOrphansOneToOneMiddleware(this);
     this.$use(deleteOrphan_middleware);
   }
@@ -46,6 +46,5 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
     return { data, meta };
   }
-
 
 }

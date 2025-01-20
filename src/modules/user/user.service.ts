@@ -38,7 +38,7 @@ export class UserService {
 
     } catch (error) {
 
-      this.logger.error(`[User Get One] Error: ${error}`);
+      this.logger.error(`[User Get One] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'UserService.getOne');
 
     }
@@ -63,7 +63,7 @@ export class UserService {
 
     } catch (error) {
 
-      this.logger.error(`[User Update] Error: ${error}`);
+      this.logger.error(`[User Update] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'UserService.updateUser');
 
     }
@@ -86,7 +86,7 @@ export class UserService {
 
     } catch (error) {
 
-      this.logger.error(`[User Get Users] Error: ${error}`);
+      this.logger.error(`[User Get Users] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'UserService.getUsers');
 
     }
