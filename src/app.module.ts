@@ -5,6 +5,7 @@ import { PrismaModule } from '@db/prisma/prisma.module';
 import { AccountRequestsModule } from '@ac-requests/account-requests.module';
 import { CoreModule } from '@core/core.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { EmailingModule } from './modules/emailing/emailing.module';
  @Module({
   imports: [
     CoreModule,
@@ -12,7 +13,8 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     AuthModule,
     AccountRequestsModule,
     UserModule,
-    NotificationsModule
+    NotificationsModule,
+    EmailingModule
   ],
   controllers: [],
   providers: [],
