@@ -38,9 +38,9 @@ model auth_Ety {
   email        String          @unique
   password     String
   username     String?         @unique
-  created_at   DateTime?
-  updated_at   DateTime?
-  last_session DateTime?
+  created_at   DateTime?       @db.Timestamptz(3)
+  updated_at   DateTime?       @db.Timestamptz(3)
+  last_session DateTime?       @db.Timestamptz(3)
   status       AuthStatus_Enum @default(PENDING)
   role         User_Role_Enum  @default(CLIENT_ROLE)
 
@@ -51,6 +51,7 @@ model auth_Ety {
 
   @@map("lxia_auth")
 }
+
 /**
  * --------------------------------------------------------------------------
  */
@@ -77,8 +78,8 @@ model accountRequests_Ety {
   type       RequestType_Enum
   status     RequestStatus_Enum @default(PENDING)
   detail     String?
-  created_at DateTime?
-  used_at    DateTime?
+  created_at DateTime?          @db.Timestamptz(3)
+  used_at    DateTime?          @db.Timestamptz(3)
 
   auth    auth_Ety? @relation(fields: [auth_id], references: [id], onDelete: Cascade)
   auth_id String?
@@ -106,7 +107,7 @@ model user_Ety {
   last_name  String
   gender     Gender_Enum? @default(NONE)
   phone      String?
-  updated_at DateTime?
+  updated_at DateTime?    @db.Timestamptz(3)
 
   auth auth_Ety?
 
@@ -119,7 +120,9 @@ model user_Ety {
  * --------------------------------------------------------------------------
  */
 
-/* ----------------------- Notifications declarations ----------------------- */
+/**
+ * ----------------------- Notifications declarations -----------------------
+ */
 
 enum NotificationState_Enum {
   READ
@@ -127,16 +130,19 @@ enum NotificationState_Enum {
 }
 
 model notifications_Ety {
-  id         Int      @id @default(autoincrement())
-  subject      String
+  id         Int                    @id @default(autoincrement())
+  subject    String
   message    String
-  created_at DateTime?
-  read_at    DateTime?
-  state     NotificationState_Enum @default(UNREAD)
+  created_at DateTime?              @db.Timestamptz(3)
+  read_at    DateTime?              @db.Timestamptz(3)
+  state      NotificationState_Enum @default(UNREAD)
 
   user    user_Ety? @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String?
 
   @@map("lxia_notifications")
 }
-/* -------------------------------------------------------------------------- */
+
+/**
+ * --------------------------------------------------------------------------
+ */

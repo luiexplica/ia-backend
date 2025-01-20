@@ -15,6 +15,7 @@ export class TempoHandler {
       format: "YYYY-MM-DDTHH:mm:ssZ",
       tz: "America/Caracas",
     });
+    console.log(c);
     return c as any;
 
   }

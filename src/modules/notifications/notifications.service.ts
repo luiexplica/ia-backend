@@ -23,6 +23,8 @@ export class NotificationsService {
 
     try {
 
+      console.log('create_notification', create_notification);
+
       const resp = await this.prismaService.$transaction(async (prisma) => {
         return NotificationsCreate_UC(create_notification, prisma);
       });
