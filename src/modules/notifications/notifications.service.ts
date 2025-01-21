@@ -3,10 +3,10 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Create_Notification_Dto } from './dto/create-notification.dto';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { PrismaService } from '@db/prisma/prisma.service';
-import { CreateResponse } from '../../core/helpers/createResponse';
+import { CreateResponse } from '@core/helpers/createResponse';
 import { NotificationsCreate_UC } from './useCases/notificationsCreate.use-case';
 import { NotificationsGetAll_UC } from './useCases/notificationsGetAll.use-case';
-import { Pagination_Dto } from '../../core/dto/pagination.dto';
+import { Pagination_Dto } from '@core/dto/pagination.dto';
 import { NotificationsRead_UC } from './useCases/notificationsRead.use-case';
 import { DeleteNotification_UC } from './useCases/notificationsDelete.use-case';
 
