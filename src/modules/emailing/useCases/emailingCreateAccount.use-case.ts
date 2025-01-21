@@ -1,7 +1,7 @@
-import { Email_CreatedAccount_I } from "@emailing/interfaces/createAccount.interface";
 import { CreatedAccount_Template } from "@emailing/templates/createdAccount.template";
 import { EmailingSendEmail_UC } from "./emailingSendEmail.use-case";
 import { Send_Email_Dto } from '@emailing/dto/send-email.dto';
+import { Email_CreatedAccount_I } from "@emailing/interfaces/emailing.interface";
 
 export const EmailingCreateAccount_UC = async (send_email: Send_Email_Dto) => {
 
