@@ -10,7 +10,9 @@ import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
 import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
-import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from '@notifications/notifications.service';
+import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from '@notifications/services/notifications.service';
+import { ACCOUNTREQUESTS_SERVICE_TOKEN, AccountRequestsService } from '@ac-requests/account-requests.service';
+import { RequestType_Enum } from '../account-requests/interfaces/accountRequests.inteface';
 @Injectable()
 export class AuthService {
 
@@ -23,6 +25,10 @@ export class AuthService {
 
     @Inject(NOTIFICATIONS_SERVICE_TOKEN)
     private readonly notificationsService: NotificationsService,
+
+    @Inject(ACCOUNTREQUESTS_SERVICE_TOKEN)
+    private readonly accountrequestsService: AccountRequestsService,
+
 
   ) {
 
@@ -60,7 +66,14 @@ export class AuthService {
     try {
 
       const new_auth = await this.prismaService.$transaction(async (prisma) => {
-        return await AuthRegister_UC(register, prisma);
+
+        const auth =  await AuthRegister_UC(register, prisma);
+        await this.accountrequestsService.create_requestByAuth({ type: RequestType_Enum.CONFIRM_ACCOUNT }, {
+          user: auth.user_id,
+          id: auth.id,
+        }, prisma);
+        return auth;
+
       });
 
       return CreateResponse({

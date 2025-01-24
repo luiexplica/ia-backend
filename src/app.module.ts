@@ -6,8 +6,10 @@ import { AccountRequestsModule } from '@ac-requests/account-requests.module';
 import { CoreModule } from '@core/core.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { EmailingModule } from './modules/emailing/emailing.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
  @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     CoreModule,
     PrismaModule,
     AuthModule,

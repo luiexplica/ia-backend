@@ -1,6 +1,6 @@
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
 import { Controller, Get, Query, Param, ParseIntPipe, Delete, Post, Body, Inject } from '@nestjs/common';
-import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from './notifications.service';
+import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from './services/notifications.service';
 import { Auth } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { Pagination_Dto } from '@core/dto/pagination.dto';

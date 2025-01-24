@@ -10,6 +10,6 @@ export class Create_Request_Key_Dto {
 
     @IsOptional()
     @IsString()
-    detail: string;
+    detail?: string;
 
 }

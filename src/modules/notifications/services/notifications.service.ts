@@ -3,11 +3,11 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { PrismaService } from '@db/prisma/prisma.service';
 import { CreateResponse } from '@core/helpers/createResponse';
-import { NotificationsCreate_UC } from './useCases/notificationsCreate.use-case';
-import { NotificationsGetAll_UC } from './useCases/notificationsGetAll.use-case';
-import { DeleteNotification_UC } from './useCases/notificationsDelete.use-case';
-import { NotificationsRead_UC } from './useCases/notificationsRead.use-case';
-import { Create_Notification_Dto } from './dto/create-notification.dto';
+import { NotificationsCreate_UC } from '@notifications/useCases/notificationsCreate.use-case';
+import { NotificationsGetAll_UC } from '@notifications/useCases/notificationsGetAll.use-case';
+import { DeleteNotification_UC } from '@notifications/useCases/notificationsDelete.use-case';
+import { NotificationsRead_UC } from '@notifications/useCases/notificationsRead.use-case';
+import { Create_Notification_Dto } from '@notifications/dto/create-notification.dto';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
 
 export const NOTIFICATIONS_SERVICE_TOKEN = 'NOTIFICATIONS_SERVICE';
@@ -19,7 +19,6 @@ export class NotificationsService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
-
 
   ) {
   }

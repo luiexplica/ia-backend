@@ -1,3 +1,4 @@
+import { Notifications_Evh_Enum, Notifications_Evh_Payload } from '@notifications/services/notifications-eventHandler.service';
 import { AccountReqCreatePass_UC } from '@ac-requests/useCases/accountReq-createPassword.use-case';
 import { AccountReqCreate_UC } from '@ac-requests/useCases/accountReq-create.use-case';
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
@@ -11,7 +12,12 @@ import { AccountReqGet_UC } from '@ac-requests/useCases/accountReq-get.use-case'
 import { AccountReqVerify_UC, AccountReqVerifyPass_UC } from './useCases/accountReq-verify.use-case';
 import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
 import { AuthGetByEmail_UC } from '@auth/useCases/authGetByEmail.use-case';
+import { Prisma, RequestType_Enum } from '@prisma/client';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NotificationTemplate_Enum } from '@notifications/interfaces/notifications.interfaces';
 import * as keygen from 'keygen';
+
+export const ACCOUNTREQUESTS_SERVICE_TOKEN = 'ACCOUNTREQUESTS_SERVICE';
 
 @Injectable()
 export class AccountRequestsService {
@@ -20,24 +26,47 @@ export class AccountRequestsService {
 
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly exceptionsHandler: ExceptionsHandler
+    private readonly exceptionsHandler: ExceptionsHandler,
+    private readonly eventEmitter: EventEmitter2
 
   ) {
 
   }
 
-  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, user_auth: Partial<Session_Auth_I>) {
+  defineNoitificationTemplate(type: RequestType_Enum): NotificationTemplate_Enum {
+    switch (type) {
+      case RequestType_Enum.CONFIRM_ACCOUNT:
+        return NotificationTemplate_Enum.CREATE_ACCOUNT;
+        break;
+      case RequestType_Enum.RESET_PASSWORD:
+        return NotificationTemplate_Enum.RESET_PASSWORD;
+        break;
+      case RequestType_Enum.CHANGE_EMAIL:
+        return NotificationTemplate_Enum.CHANGE_EMAIL;
+        break;
+      default:
+        break;
+    }
+  }
+
+  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, auth: Partial<Session_Auth_I>, prismaClient?: Prisma.TransactionClient) {
 
     try {
 
+      const prisma = prismaClient || this.prismaService;
+
       const key = keygen.url(175);
-      const request = await this.prismaService.$transaction(async (prisma) => {
-        return await AccountReqCreate_UC({
-          create: create_request_dto,
-          key,
-          auth_id: user_auth.id
-        }, prisma)
-      })
+      const request = await AccountReqCreate_UC({
+        create: create_request_dto,
+        key,
+        auth_id: auth.id
+      }, prisma);
+
+      const payload: Notifications_Evh_Payload[Notifications_Evh_Enum.CREATE] = {
+        user: auth.user,
+        template: this.defineNoitificationTemplate(create_request_dto.type),
+      }
+      await this.eventEmitter.emit(Notifications_Evh_Enum.CREATE, payload)
 
       return CreateResponse({
         ok: true,
@@ -136,7 +165,7 @@ export class AccountRequestsService {
 
   }
 
-   async verify_pass_request(key: string, Accept_Password_Request_Dto: Accept_Password_Request_Dto) {
+  async verify_pass_request(key: string, Accept_Password_Request_Dto: Accept_Password_Request_Dto) {
 
     try {
 
@@ -158,6 +187,6 @@ export class AccountRequestsService {
 
     }
 
-   }
+  }
 
 }

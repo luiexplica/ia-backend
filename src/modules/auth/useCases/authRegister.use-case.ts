@@ -33,7 +33,7 @@ const isValidEmailExists = async (email: string, prisma: Prisma.TransactionClien
 
 }
 
-export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma: Prisma.TransactionClient): Promise<AuthRegister_Dto> => {
+export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma: Prisma.TransactionClient) => {
 
   const {
     name,
@@ -55,12 +55,17 @@ export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma
         create: {
           name,
           last_name,
-
         }
       }
+    },
+    include: {
+      user: true
     }
   })
 
-  return AuthRegister_Dto;
+  return {
+    ...auth,
+    password: '****'
+  };
 
 }
