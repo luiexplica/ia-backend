@@ -6,13 +6,14 @@ import { Send_Email_Dto } from './dto/send-email.dto';
 import { EmailingCreateAccount_UC } from './useCases/emailingCreateAccount.use-case';
 import { EmailingResetPassword_UC } from './useCases/emailingResetPass.use-case';
 
+export const EMAILING_SERVICE_TOKEN = 'EMAILING_SERVICE';
 @Injectable()
 export class EmailingService {
 
   private readonly logger = new Logger('NotificationsService');
 
   constructor(
-    private readonly prismaService: PrismaService,
+    // private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler
 
   ) {

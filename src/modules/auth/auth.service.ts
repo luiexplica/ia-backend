@@ -1,5 +1,5 @@
 import { PrismaService } from '@db/prisma/prisma.service';
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { AuthRegister_Dto } from './dto/register-user.dto';
 import { AuthRegister_UC } from './useCases/authRegister.use-case';
@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
 import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
+import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from '@notifications/notifications.service';
 @Injectable()
 export class AuthService {
 
@@ -18,7 +19,11 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly prismaService: PrismaService,
-    private readonly exceptionsHandler: ExceptionsHandler
+    private readonly exceptionsHandler: ExceptionsHandler,
+
+    @Inject(NOTIFICATIONS_SERVICE_TOKEN)
+    private readonly notificationsService: NotificationsService,
+
   ) {
 
   }
@@ -29,7 +34,7 @@ export class AuthService {
 
       const resp = await this.prismaService.$transaction(async (prisma) => {
         return await AuthDeleteAccount_UC(auth_id, prisma);
-      })
+      });
 
       return CreateResponse<Partial<typeof resp>>({
         ok: true,
@@ -58,15 +63,15 @@ export class AuthService {
         return await AuthRegister_UC(register, prisma);
       });
 
-        return CreateResponse({
-          ok: true,
-          data: {
-            ...new_auth,
-            password: '****'
-          },
-          message: 'Usuario creado correctamente',
-          statusCode: HttpStatus.CREATED,
-        })
+      return CreateResponse({
+        ok: true,
+        data: {
+          ...new_auth,
+          password: '****'
+        },
+        message: 'Usuario creado correctamente',
+        statusCode: HttpStatus.CREATED,
+      })
 
     } catch (error) {
 
@@ -83,28 +88,28 @@ export class AuthService {
 
   async renewToken(token: string) {
 
-        try {
+    try {
 
-            const { sub, iat, exp, ...user } = this.jwtService.verify(token, {
-                secret: envs.jwtSecret
-            });
+      const { sub, iat, exp, ...user } = this.jwtService.verify(token, {
+        secret: envs.jwtSecret
+      });
 
-            return CreateResponse({
-                ok: true,
-                statusCode: HttpStatus.OK,
-                message: 'Token verificado',
-                data: {
-                    ...user,
-                    token: await this.signJWT(user)
-                },
-            })
+      return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.OK,
+        message: 'Token verificado',
+        data: {
+          ...user,
+          token: await this.signJWT(user)
+        },
+      })
 
-        } catch (error) {
+    } catch (error) {
 
-            this.logger.error(`[ Renew token ] Error: `, error);
-            this.exceptionsHandler.EmitException(error, 'AuthService.renewToken');
+      this.logger.error(`[ Renew token ] Error: `, error);
+      this.exceptionsHandler.EmitException(error, 'AuthService.renewToken');
 
-        }
+    }
 
   }
 
@@ -112,9 +117,9 @@ export class AuthService {
 
     try {
 
-      let auth = await this.prismaService.$transaction( async (prisma) => {
+      let auth = await this.prismaService.$transaction(async (prisma) => {
         return await AuthLogin_UC(login, prisma);
-      } );
+      });
 
       delete auth.password;
       const token = await this.signJWT({

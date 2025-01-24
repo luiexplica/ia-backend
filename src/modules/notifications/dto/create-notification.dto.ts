@@ -1,15 +1,23 @@
 
-import { IsString, IsUUID, MinLength } from "class-validator";
+import { IsEnum, IsOptional, IsString, IsUUID, MinLength } from "class-validator";
+import { NotificationTemplate_Enum } from "@notifications/interfaces/notifications.interfaces";
 
 export class Create_Notification_Dto {
 
   @IsString()
   @MinLength(3)
-  subject: string;
+  @IsOptional()
+  subject?: string;
 
   @IsString()
   @MinLength(10)
-  message: string;
+  @IsOptional()
+  message?: string;
+
+  @IsEnum(NotificationTemplate_Enum, {
+    message: `Template must be one of the following values: ${{ ...NotificationTemplate_Enum }}`
+  })
+  template: NotificationTemplate_Enum = NotificationTemplate_Enum.INFO;
 
   @IsUUID(4, { message: 'user is a Invalid UUID' })
   user: string;

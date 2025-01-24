@@ -6,9 +6,17 @@ export enum NotificationState_Enum {
   UNREAD = "UNREAD",
 }
 
+export enum NotificationTemplate_Enum {
+  CREATE_ACCOUNT = "CREATE_ACCOUNT",
+  RESET_PASSWORD = "RESET_PASSWORD",
+  CHANGE_EMAIL = "CHANGE_EMAIL",
+  INFO = "INFO",
+}
+
 export interface Notifications_I extends SchemaKey_I {
 
   state: NotificationState_Enum;
+  template: NotificationTemplate_Enum;
   subject: string;
   message: string;
   user?: User_I;
@@ -17,3 +25,4 @@ export interface Notifications_I extends SchemaKey_I {
   read_at?: Date;
 
 }
+

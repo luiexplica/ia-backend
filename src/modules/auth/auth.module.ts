@@ -6,6 +6,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { envs } from '@core/config/envs';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { NotificationsModule } from '@notifications/notifications.module';
+import { EmailingModule } from '@emailing/emailing.module';
 
 @Module({
   controllers: [AuthController],
@@ -30,6 +32,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         };
       },
     }),
+
+    NotificationsModule,
+    EmailingModule
 
   ]
 })

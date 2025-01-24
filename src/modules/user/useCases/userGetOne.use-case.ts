@@ -9,7 +9,20 @@ export const UserGetOne_UC = async (auth_id: string, prisma: PrismaService) => {
       auth: {
         id: auth_id,
       },
-    }
+    },
+    include: {
+      auth: {
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          role: true,
+          status: true,
+        },
+      },
+
+    },
+
   })
 
   if (!user) {

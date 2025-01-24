@@ -1,13 +1,25 @@
 import { Module } from '@nestjs/common';
-import { NotificationsService } from './notifications.service';
+import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from './notifications.service';
 import { NotificationsController } from './notifications.controller';
 import { EmailingModule } from '@emailing/emailing.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  controllers: [NotificationsController],
-  providers: [NotificationsService],
+  controllers: [
+    NotificationsController
+  ],
+  providers: [
+    {
+      provide: NOTIFICATIONS_SERVICE_TOKEN,
+      useClass: NotificationsService
+    }
+  ],
   imports: [
-    EmailingModule
+    EmailingModule,
+    UserModule
+  ],
+  exports: [
+    NOTIFICATIONS_SERVICE_TOKEN
   ]
 })
-export class NotificationsModule {}
+export class NotificationsModule { }

@@ -9,8 +9,8 @@ import { DeleteNotification_UC } from './useCases/notificationsDelete.use-case';
 import { NotificationsRead_UC } from './useCases/notificationsRead.use-case';
 import { Create_Notification_Dto } from './dto/create-notification.dto';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
-import { EmailingService } from '@emailing/emailing.service';
 
+export const NOTIFICATIONS_SERVICE_TOKEN = 'NOTIFICATIONS_SERVICE';
 @Injectable()
 export class NotificationsService {
 
@@ -19,10 +19,9 @@ export class NotificationsService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
-    private readonly emailingService: EmailingService
+
 
   ) {
-
   }
 
   async create(create_notification: Create_Notification_Dto) {

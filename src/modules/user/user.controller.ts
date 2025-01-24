@@ -1,6 +1,6 @@
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
-import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query } from '@nestjs/common';
-import { UserService } from './user.service';
+import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query, Inject } from '@nestjs/common';
+import { USER_SERVICE_TOKEN, UserService } from './user.service';
 import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { UpdateUser_Dto } from './dto/update-user.dto';
@@ -9,7 +9,11 @@ import { Pagination_Dto } from '@core/dto/pagination.dto';
 @Controller('user')
 export class UserController {
 
-  constructor(private readonly userService: UserService) { }
+  constructor(
+    // private readonly userService: UserService
+    @Inject(USER_SERVICE_TOKEN)
+    private readonly userService: UserService,
+  ) { }
 
   @Auth_SameIdOrAdmin()
   @Get(':auth_id')
@@ -19,13 +23,13 @@ export class UserController {
 
   @Auth()
   @Put()
-  async updateUser( @Body() UpdateUser_Dto: UpdateUser_Dto, @User_Auth() User_Auth: Session_Auth_I ) {
-    return await this.userService.updateUser( UpdateUser_Dto, User_Auth);
+  async updateUser(@Body() UpdateUser_Dto: UpdateUser_Dto, @User_Auth() User_Auth: Session_Auth_I) {
+    return await this.userService.updateUser(UpdateUser_Dto, User_Auth);
   }
 
   // @Auth_AdminOrSupport()
   @Get()
-  async getUsers(  @Query() paginationDto: Pagination_Dto, ) {
+  async getUsers(@Query() paginationDto: Pagination_Dto,) {
     console.log('paginationDto', paginationDto);
     return await this.userService.getUsers(paginationDto);
   }

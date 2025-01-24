@@ -16,6 +16,9 @@ CREATE TYPE "Gender_Enum" AS ENUM ('MALE', 'FEMALE', 'NONE');
 -- CreateEnum
 CREATE TYPE "NotificationState_Enum" AS ENUM ('READ', 'UNREAD');
 
+-- CreateEnum
+CREATE TYPE "NotificationTemplate_Enum" AS ENUM ('CREATE_ACCOUNT', 'RESET_PASSWORD', 'CHANGE_EMAIL', 'INFO');
+
 -- CreateTable
 CREATE TABLE "lxia_auth" (
     "id" TEXT NOT NULL,
@@ -66,6 +69,7 @@ CREATE TABLE "lxia_notifications" (
     "created_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
     "read_at" TIMESTAMPTZ(3),
     "state" "NotificationState_Enum" NOT NULL DEFAULT 'UNREAD',
+    "template" "NotificationTemplate_Enum" NOT NULL DEFAULT 'INFO',
     "user_id" TEXT,
 
     CONSTRAINT "lxia_notifications_pkey" PRIMARY KEY ("id")
