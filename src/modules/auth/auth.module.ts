@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -6,9 +6,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { envs } from '@core/config/envs';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { NotificationsModule } from '@notifications/notifications.module';
 import { EmailingModule } from '@emailing/emailing.module';
-import { AccountRequestsModule } from '../account-requests/modules/account-requests.module';
+import { AccountRequestsModule } from '../account-requests/account-requests.module';
 
 @Module({
   controllers: [
@@ -38,9 +37,11 @@ import { AccountRequestsModule } from '../account-requests/modules/account-reque
       },
     }),
 
-    AccountRequestsModule,
-    NotificationsModule,
-    EmailingModule
+    // AccountRequestsModule,
+    // AccountRequestsModule,
+    forwardRef(() => AccountRequestsModule),
+    EmailingModule,
+
   ]
 })
 export class AuthModule { }

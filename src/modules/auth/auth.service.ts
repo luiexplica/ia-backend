@@ -10,13 +10,23 @@ import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
 import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
-import { NotificationsService } from '@notifications/services/notifications.service';
-import { AccountRequestsService } from '@ac-requests/services/account-requests.service';
+import { AccountRequestsService } from '@ac-requests/account-requests.service';
 import { RequestType_Enum } from '../account-requests/interfaces/accountRequests.inteface';
 import { AuthGetByEmail_UC } from './useCases/authGetByEmail.use-case';
+import { Response_I } from '@core/interfaces/response.interface';
+import { auth_Ety } from '@prisma/client';
+
+export interface AuthService_I {
+  getOneByEmail(email: string): Promise<Response_I<auth_Ety>>;
+  delete(auth_id: string): Promise<Response_I<any>>;
+  register(register: AuthRegister_Dto): Promise<Response_I<auth_Ety>>;
+  signJWT(payload: JWT_Payload_I): Promise<string>;
+  renewToken(token: string): Promise<Response_I<Partial<JWT_Payload_I>>>;
+  login(login: LoginAuth_Dto): Promise<Response_I<auth_Ety>>;
+}
 
 @Injectable()
-export class AuthService {
+export class AuthService  {
 
   private readonly logger = new Logger('AuthService');
 
@@ -25,8 +35,6 @@ export class AuthService {
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
 
-    private readonly notificationsService: NotificationsService,
-
     private readonly accountrequestsService: AccountRequestsService,
 
 
@@ -34,7 +42,7 @@ export class AuthService {
 
   }
 
-  async getOneByEmail(email: string) {
+  async getOneByEmail(email: string): Promise<Response_I<auth_Ety>> {
 
     try {
 
@@ -92,6 +100,7 @@ export class AuthService {
           id: auth.id,
           email: auth.email,
         }, prisma);
+
         return auth;
 
       });
@@ -159,7 +168,7 @@ export class AuthService {
         id: auth.id,
         email: auth.email,
         role: auth.role,
-        user: auth.user.id,
+        user: auth.user_id,
         username: auth.username ?? '',
       });
 

@@ -6,13 +6,13 @@ export const AuthGetByEmail_UC = async (email: string, prisma: Prisma.Transactio
     where: {
       email
     },
-    include: {
-      user: {
-        select: {
-          id: true,
-        },
-      },
-    },
+    // include: {
+    //   user: {
+    //     select: {
+    //       id: true,
+    //     },
+    //   },
+    // },
   });
   return auth ?? null;
 

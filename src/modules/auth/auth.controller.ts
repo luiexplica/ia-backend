@@ -1,6 +1,6 @@
 
-import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, Get, Post, Body, Delete, Param, Inject } from '@nestjs/common';
+import { AuthService, AuthService_I } from './auth.service';
 import { AuthRegister_Dto } from './dto/register-user.dto';
 import { LoginAuth_Dto } from './dto/login-user.dto';
 import { User_Auth } from './decorators/user-auth.decorator';
@@ -11,6 +11,7 @@ import { Auth, Auth_SameUser } from './decorators/auth.decorator';
 export class AuthController {
 
   constructor(
+    // private readonly authService: AuthService
     private readonly authService: AuthService
   ) { }
 

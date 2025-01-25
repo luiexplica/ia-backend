@@ -5,7 +5,7 @@ import { Create_Request_Key_Dto } from './dto/create-request-key.dto';
 import { Auth } from '@auth/decorators/auth.decorator';
 import { Create_Password_Request_Dto } from './dto/create-password-request.dto';
 import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
-import { AccountRequestsService } from './services/account-requests.service';
+import { AccountRequestsService } from './account-requests.service';
 
 @Controller('account-requests')
 export class AccountRequestsController {
