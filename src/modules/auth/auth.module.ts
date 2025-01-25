@@ -36,10 +36,7 @@ import { AccountRequestsModule } from '../account-requests/account-requests.modu
         };
       },
     }),
-
-    // AccountRequestsModule,
-    // AccountRequestsModule,
-    forwardRef(() => AccountRequestsModule),
+    AccountRequestsModule,
     EmailingModule,
 
   ]

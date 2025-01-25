@@ -6,7 +6,8 @@ import * as joi from 'joi';
 enum NodeEnv {
   DEVELOPMENT = 'development',
   STAGING = 'staging',
-  PRODUCTION = 'production'
+  PRODUCTION = 'production',
+  TEST = 'test'
 }
 
 interface EnvVars_I {
@@ -42,7 +43,7 @@ const envsSchema = joi.object({
   DTO_PREFIX: joi.string().optional(),
   // NATS_SERVERS: joi.array().items(joi.string()),
 
-  NODE_ENV: joi.string().valid(NodeEnv.DEVELOPMENT, NodeEnv.STAGING, NodeEnv.PRODUCTION).required(),
+  NODE_ENV: joi.string().valid(NodeEnv.DEVELOPMENT, NodeEnv.STAGING, NodeEnv.PRODUCTION, NodeEnv.TEST).required(),
 
   DB_PASSWORD: joi.string().required(),
   DB_NAME: joi.string().required(),

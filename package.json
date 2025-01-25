@@ -82,10 +82,22 @@
       "json",
       "ts"
     ],
+    "globals": {
+      "NODE_ENV": "TEST"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "@core/(.*)": "<rootDir>/core/$1",
+      "@db/(.*)": "<rootDir>/database/$1",
+      "@ac-requests/(.*)": "<rootDir>/modules/account-requests/$1",
+      "@auth/(.*)": "<rootDir>/modules/auth/$1",
+      "@user/(.*)": "<rootDir>/modules/user/$1",
+      "@emailing/(.*)": "<rootDir>/modules/emailing/$1",
+      "@notifications/(.*)": "<rootDir>/modules/notifications/$1"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
