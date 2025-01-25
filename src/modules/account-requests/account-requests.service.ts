@@ -28,7 +28,6 @@ export class AccountRequestsService {
     private readonly exceptionsHandler: ExceptionsHandler,
     private readonly eventEmitter: EventEmitter2,
 
-
   ) {
   }
 
