@@ -8,16 +8,20 @@ import { envs } from '@core/config/envs';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { NotificationsModule } from '@notifications/notifications.module';
 import { EmailingModule } from '@emailing/emailing.module';
-import { AccountRequestsModule } from '../account-requests/account-requests.module';
+import { AccountRequestsModule } from '../account-requests/modules/account-requests.module';
 
 @Module({
-  controllers: [AuthController],
+  controllers: [
+    AuthController
+  ],
   providers: [
     JwtStrategy,
-    AuthService,
+    AuthService
   ],
   exports: [
-    JwtStrategy, PassportModule
+    JwtStrategy,
+    PassportModule,
+    AuthService
   ],
   imports: [
     PassportModule.register({
@@ -37,7 +41,6 @@ import { AccountRequestsModule } from '../account-requests/account-requests.modu
     AccountRequestsModule,
     NotificationsModule,
     EmailingModule
-
   ]
 })
 export class AuthModule { }

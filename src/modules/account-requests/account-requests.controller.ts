@@ -1,17 +1,16 @@
-import { Controller, Get, Post, Body, Param, Put, Inject } from '@nestjs/common';
-import { ACCOUNTREQUESTS_SERVICE_TOKEN, AccountRequestsService } from './account-requests.service';
+import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
 import { Create_Request_Key_Dto } from './dto/create-request-key.dto';
 import { Auth } from '@auth/decorators/auth.decorator';
 import { Create_Password_Request_Dto } from './dto/create-password-request.dto';
 import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
+import { AccountRequestsService } from './services/account-requests.service';
 
 @Controller('account-requests')
 export class AccountRequestsController {
 
   constructor(
-        @Inject(ACCOUNTREQUESTS_SERVICE_TOKEN)
         private readonly accountRequestsService: AccountRequestsService,
 
   ) {}

@@ -1,5 +1,7 @@
+
 import { Module } from '@nestjs/common';
-import { EMAILING_SERVICE_TOKEN, EmailingService } from './emailing.service';
+import { EmailingService } from './services/emailing.service';
+import { EmailingEventHandlerService } from './services/emailing-eventHandler.service';
 
 // @Global()
 @Module({
@@ -7,13 +9,11 @@ import { EMAILING_SERVICE_TOKEN, EmailingService } from './emailing.service';
     // EmailingController
   ],
   providers: [
-    {
-      provide: EMAILING_SERVICE_TOKEN,
-      useClass: EmailingService
-    }
+    EmailingEventHandlerService,
+    EmailingService,
   ],
   exports: [
-    EMAILING_SERVICE_TOKEN
+    EmailingService
   ]
 })
 export class EmailingModule {}

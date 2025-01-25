@@ -7,7 +7,7 @@ interface Create_Request_Key_I {
   auth_id: string;
 }
 
-export const AccountReqCreatePass_UC = async ({create, key, auth_id}: Create_Request_Key_I, prisma: Prisma.TransactionClient) => {
+export const AccountReqCreatePass_UC = async ({ create, key, auth_id }: Create_Request_Key_I, prisma: Prisma.TransactionClient) => {
 
   const request_created = await prisma.accountRequests_Ety.create({
     data: {
@@ -25,6 +25,18 @@ export const AccountReqCreatePass_UC = async ({create, key, auth_id}: Create_Req
       auth_id: true,
       id: true,
     },
+    include: {
+      auth: {
+        select: {
+          user: {
+            select: {
+              name: true,
+            }
+          },
+          email: true
+        }
+      }
+    }
   });
 
   return request_created;

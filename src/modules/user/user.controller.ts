@@ -1,6 +1,6 @@
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
-import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query, Inject } from '@nestjs/common';
-import { USER_SERVICE_TOKEN, UserService } from './user.service';
+import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query } from '@nestjs/common';
+import { UserService } from './user.service';
 import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { UpdateUser_Dto } from './dto/update-user.dto';
@@ -11,7 +11,6 @@ export class UserController {
 
   constructor(
     // private readonly userService: UserService
-    @Inject(USER_SERVICE_TOKEN)
     private readonly userService: UserService,
   ) { }
 

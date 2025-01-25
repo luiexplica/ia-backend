@@ -1,5 +1,5 @@
 import { PrismaService } from '@db/prisma/prisma.service';
-import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { AuthRegister_Dto } from './dto/register-user.dto';
 import { AuthRegister_UC } from './useCases/authRegister.use-case';
@@ -10,9 +10,11 @@ import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
 import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
-import { NOTIFICATIONS_SERVICE_TOKEN, NotificationsService } from '@notifications/services/notifications.service';
-import { ACCOUNTREQUESTS_SERVICE_TOKEN, AccountRequestsService } from '@ac-requests/account-requests.service';
+import { NotificationsService } from '@notifications/services/notifications.service';
+import { AccountRequestsService } from '@ac-requests/services/account-requests.service';
 import { RequestType_Enum } from '../account-requests/interfaces/accountRequests.inteface';
+import { AuthGetByEmail_UC } from './useCases/authGetByEmail.use-case';
+
 @Injectable()
 export class AuthService {
 
@@ -23,15 +25,32 @@ export class AuthService {
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
 
-    @Inject(NOTIFICATIONS_SERVICE_TOKEN)
     private readonly notificationsService: NotificationsService,
 
-    @Inject(ACCOUNTREQUESTS_SERVICE_TOKEN)
     private readonly accountrequestsService: AccountRequestsService,
 
 
   ) {
 
+  }
+
+  async getOneByEmail(email: string) {
+
+    try {
+
+      const auth =  await AuthGetByEmail_UC(email, this.prismaService);
+
+      return CreateResponse({
+        ok: true,
+        data: auth,
+        message: 'Usuario encontrado correctamente',
+        statusCode: HttpStatus.OK,
+      });
+
+    } catch (error) {
+      this.logger.error(`[Auth GetByEmail] Error: `, error);
+      this.exceptionsHandler.EmitException(error, 'AuthService.getOneByEmail');
+    }
   }
 
   async delete(auth_id: string) {
@@ -71,6 +90,7 @@ export class AuthService {
         await this.accountrequestsService.create_requestByAuth({ type: RequestType_Enum.CONFIRM_ACCOUNT }, {
           user: auth.user_id,
           id: auth.id,
+          email: auth.email,
         }, prisma);
         return auth;
 

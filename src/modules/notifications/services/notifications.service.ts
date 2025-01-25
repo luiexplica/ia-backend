@@ -1,3 +1,4 @@
+import { Emailing_Evh_Payload } from '@emailing/services/emailing-eventHandler.service';
 import { Session_Auth_I } from '@auth/interfaces/auth.interface';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
@@ -9,8 +10,10 @@ import { DeleteNotification_UC } from '@notifications/useCases/notificationsDele
 import { NotificationsRead_UC } from '@notifications/useCases/notificationsRead.use-case';
 import { Create_Notification_Dto } from '@notifications/dto/create-notification.dto';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NotificationTemplate_Enum } from '@notifications/interfaces/notifications.interfaces';
+import { RequestType_Enum } from '@ac-requests/interfaces/accountRequests.inteface';
 
-export const NOTIFICATIONS_SERVICE_TOKEN = 'NOTIFICATIONS_SERVICE';
 @Injectable()
 export class NotificationsService {
 
@@ -19,8 +22,23 @@ export class NotificationsService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
-
   ) {
+  }
+
+  notificationTemplateByAccountRequest(type: RequestType_Enum): NotificationTemplate_Enum {
+    switch (type) {
+      case RequestType_Enum.CONFIRM_ACCOUNT:
+        return NotificationTemplate_Enum.CREATE_ACCOUNT;
+        break;
+      case RequestType_Enum.RESET_PASSWORD:
+        return NotificationTemplate_Enum.RESET_PASSWORD;
+        break;
+      case RequestType_Enum.CHANGE_EMAIL:
+        return NotificationTemplate_Enum.CHANGE_EMAIL;
+        break;
+      default:
+        break;
+    }
   }
 
   async create(create_notification: Create_Notification_Dto) {

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { USER_SERVICE_TOKEN, UserService } from './user.service';
+import { UserService } from './user.service';
 import { UserController } from './user.controller';
 
 @Module({
@@ -7,13 +7,10 @@ import { UserController } from './user.controller';
     UserController
   ],
   providers: [
-    {
-      provide: USER_SERVICE_TOKEN,
-      useClass: UserService,
-    },
+    UserService
   ],
   exports: [
-    USER_SERVICE_TOKEN
+    UserService
   ]
 })
 export class UserModule { }

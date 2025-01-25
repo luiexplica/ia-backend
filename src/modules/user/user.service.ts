@@ -12,8 +12,6 @@ import { Response_I } from '@core/interfaces/response.interface';
 import { user_Ety } from '@prisma/client';
 
 
-export const USER_SERVICE_TOKEN = 'USER_SERVICE';
-
 @Injectable()
 export class UserService {
 

@@ -1,3 +1,4 @@
+import { RequestType_Enum } from "@ac-requests/interfaces/accountRequests.inteface";
 
 export interface EmailConfig_I {
   host?: string;
@@ -38,4 +39,12 @@ export interface Email_ChangeEmail_I {
     new_email: string,
     key: string
   }
+}
+
+export interface Create_EmailByRequest_I {
+  to: string,
+  name: string,
+  key?: string,
+  detail?: string,
+  typeRequest: RequestType_Enum
 }
