@@ -41,25 +41,6 @@ export class AuthService {
 
   }
 
-  // async getOneByEmail(email: string): Promise<Response_I<auth_Ety>> {
-
-  //   try {
-
-  //     const auth =  await AuthGetByEmail_UC(email, this.prismaService);
-
-  //     return CreateResponse({
-  //       ok: true,
-  //       data: auth,
-  //       message: 'Usuario encontrado correctamente',
-  //       statusCode: HttpStatus.OK,
-  //     });
-
-  //   } catch (error) {
-  //     this.logger.error(`[Auth GetByEmail] Error: `, error);
-  //     this.exceptionsHandler.EmitException(error, 'AuthService.getOneByEmail');
-  //   }
-  // }
-
   async delete(auth_id: string) {
 
     try {

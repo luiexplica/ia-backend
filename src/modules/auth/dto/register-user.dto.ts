@@ -19,11 +19,11 @@ export class AuthRegister_Dto {
   @IsEmail()
   email: string;
 
-  @IsEnum(User_Role_Enum, {
-    message: `Role must be one of the following values: ${{ ...User_Role_Enum }}`
-  })
-  @IsOptional()
-  role: User_Role_Enum;
+  // @IsEnum(User_Role_Enum, {
+  //   message: `Role must be one of the following values: ${{ ...User_Role_Enum }}`
+  // })
+  // @IsOptional()
+  // role: User_Role_Enum;
 
   @IsString()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {

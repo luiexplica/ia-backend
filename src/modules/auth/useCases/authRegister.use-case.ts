@@ -40,16 +40,16 @@ export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma
     last_name,
     email,
     password,
-    role
+    // role
   } = AuthRegister_Dto;
 
   await isValidEmailExists(email, prisma);
-  isValidRegisterRole(role);
+  // isValidRegisterRole(role);
 
   const auth = await prisma.auth_Ety.create({
     data: {
       email,
-      role,
+      // role,
       password: bcrypt.hashSync(password, 10),
       user: {
         create: {

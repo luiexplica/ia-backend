@@ -1,6 +1,6 @@
 
-import { Controller, Get, Post, Body, Delete, Param, Inject } from '@nestjs/common';
-import { AuthService, AuthService_I } from './services/auth.service';
+import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
+import { AuthService } from './services/auth.service';
 import { AuthRegister_Dto } from './dto/register-user.dto';
 import { LoginAuth_Dto } from './dto/login-user.dto';
 import { User_Auth } from './decorators/user-auth.decorator';

@@ -17,9 +17,7 @@ import { AuthConfigModule } from './authConfig.module';
   ],
   imports: [
     AuthConfigModule,
-    AccountRequestsModule,
-    EmailingModule,
-
+    AccountRequestsModule
   ]
 })
 export class AuthModule { }
