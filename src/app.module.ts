@@ -7,6 +7,9 @@ import { CoreModule } from '@core/core.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { EmailingModule } from './modules/emailing/emailing.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { GptModule } from './modules/products/gpt/gpt.module';
+import { LexiaAssistantModule } from './modules/products/lexia-assistant/lexia-assistant.module';
+import { ProductsModule } from './modules/products/products.module';
  @Module({
   imports: [
     EventEmitterModule.forRoot(),
@@ -16,7 +19,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     AccountRequestsModule,
     UserModule,
     NotificationsModule,
-    EmailingModule
+    EmailingModule,
+    ProductsModule
   ],
   controllers: [],
   providers: [],
