@@ -29,7 +29,6 @@ export class UserController {
   // @Auth_AdminOrSupport()
   @Get()
   async getUsers(@Query() paginationDto: Pagination_Dto,) {
-    console.log('paginationDto', paginationDto);
     return await this.userService.getUsers(paginationDto);
   }
 

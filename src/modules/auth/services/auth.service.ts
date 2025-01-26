@@ -1,20 +1,20 @@
 import { PrismaService } from '@db/prisma/prisma.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
-import { AuthRegister_Dto } from './dto/register-user.dto';
-import { AuthRegister_UC } from './useCases/authRegister.use-case';
+import { AuthRegister_Dto } from '@auth/dto/register-user.dto';
+import { AuthRegister_UC } from '@auth/useCases/authRegister.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
-import { LoginAuth_Dto } from './dto/login-user.dto';
-import { AuthLogin_UC } from './useCases/authLogin.use-case';
+import { LoginAuth_Dto } from '@auth/dto/login-user.dto';
+import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
 import { JwtService } from '@nestjs/jwt';
-import { JWT_Payload_I } from './interfaces/jwt-payload.interface';
+import { JWT_Payload_I } from '@auth/interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
-import { AuthDeleteAccount_UC } from './useCases/authDeleteAccount.use-case';
+import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { RequestType_Enum } from '../account-requests/interfaces/accountRequests.inteface';
-import { AuthGetByEmail_UC } from './useCases/authGetByEmail.use-case';
+import { RequestType_Enum } from '@ac-requests/interfaces/accountRequests.inteface';
 import { Response_I } from '@core/interfaces/response.interface';
 import { auth_Ety } from '@prisma/client';
+import { AuthConfigService } from './authConfig.service';
 
 export interface AuthService_I {
   getOneByEmail(email: string): Promise<Response_I<auth_Ety>>;
@@ -26,15 +26,15 @@ export interface AuthService_I {
 }
 
 @Injectable()
-export class AuthService  {
+export class AuthService {
 
   private readonly logger = new Logger('AuthService');
 
   constructor(
-    private readonly jwtService: JwtService,
+
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
-
+    private readonly authConfigService: AuthConfigService,
     private readonly accountrequestsService: AccountRequestsService,
 
   ) {
@@ -93,7 +93,7 @@ export class AuthService  {
 
       const new_auth = await this.prismaService.$transaction(async (prisma) => {
 
-        const auth =  await AuthRegister_UC(register, prisma);
+        const auth = await AuthRegister_UC(register, prisma);
         await this.accountrequestsService.create_requestByAuth({ type: RequestType_Enum.CONFIRM_ACCOUNT }, {
           user: auth.user_id,
           id: auth.id,
@@ -123,17 +123,17 @@ export class AuthService  {
 
   }
 
-  async signJWT(payload: JWT_Payload_I) {
-    return this.jwtService.sign(payload)
-  }
-
   async renewToken(token: string) {
 
     try {
 
-      const { sub, iat, exp, ...user } = this.jwtService.verify(token, {
-        secret: envs.jwtSecret
-      });
+      const {
+        // sub,
+        //  iat,
+        // exp,
+        token: new_token,
+        user
+      } = await this.authConfigService.verify(token);
 
       return CreateResponse({
         ok: true,
@@ -141,7 +141,7 @@ export class AuthService  {
         message: 'Token verificado',
         data: {
           ...user,
-          token: await this.signJWT(user)
+          token: new_token
         },
       })
 
@@ -163,7 +163,7 @@ export class AuthService  {
       });
 
       delete auth.password;
-      const token = await this.signJWT({
+      const token = await this.authConfigService.signJWT({
         id: auth.id,
         email: auth.email,
         role: auth.role,
