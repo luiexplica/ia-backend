@@ -113,6 +113,8 @@ model user_Ety {
 
   notifications notifications_Ety[]
 
+  ia_conversations ia_conversation_Ety[]
+
   @@map("lxia_user")
 }
 
@@ -148,6 +150,54 @@ model notifications_Ety {
   user_id    String
 
   @@map("lxia_notifications")
+}
+
+/**
+ * --------------------------------------------------------------------------
+ */
+
+/**
+ * -------------------------------- PRODUCTS --------------------------------
+ */
+
+/**
+ * ----------------------------------- IA -----------------------------------
+ */
+
+enum IA_Type_Enum {
+  GPT
+}
+
+model ia_conversation_Ety {
+  id         String       @id @default(uuid())
+  type       IA_Type_Enum
+  model      String
+  created_at DateTime?    @default(now()) @db.Timestamptz(3)
+  updated_at DateTime     @updatedAt @db.Timestamptz(3)
+
+  gpt_messages gpt_message_Ety[]
+
+  user    user_Ety @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String
+
+  @@map("lxia_ia_conversation")
+}
+
+model gpt_message_Ety {
+  id                String        @id @default(uuid())
+  gpt_id            String        @unique
+  role              String
+  content           String
+  prompt_tokens     Int
+  completion_tokens Int
+  total_tokens      Int
+  created_at        DateTime?     @default(now()) @db.Timestamptz(3)
+  finish_reason     String
+
+  ia_conversation    ia_conversation_Ety @relation(fields: [ia_conversation_id], references: [id], onDelete: Cascade)
+  ia_conversation_id String
+
+  @@map("lxia_gpt_message")
 }
 
 /**

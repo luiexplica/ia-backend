@@ -1,17 +1,23 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@db/prisma/prisma.service';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
-import  OpenAI  from 'openai';
-import { ChatCompletionMessageParam } from 'openai/resources';
+import { IA_CreateConversation_Dto } from '../dto/createConversation.dto';
+import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { GptInitConversation_UC } from './useCases/gptCreate.use-case';
+import { envs } from '@core/config/envs';
+import OpenAI from 'openai';
+import { CreateResponse } from '@core/helpers/createResponse';
+import { Gpt_AddMessageConversation_Dto } from './dto/addMessageConversation.dto';
+import { GptAddMessage_UC } from './useCases/gptAddMessage.use-case';
 
 @Injectable()
 export class GptService {
 
   private readonly logger = new Logger('GptService');
 
-   private _openAi = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-    });
+  private _openAi = new OpenAI({
+    apiKey: envs.openai_api_key,
+  });
 
   constructor(
     private readonly prismaService: PrismaService,
@@ -20,36 +26,49 @@ export class GptService {
 
   }
 
-  async createConversation(createGptDto: any) {
+  async createConversation(createGptDto: IA_CreateConversation_Dto, User_Auth: Session_Auth_I) {
 
     try {
 
-      const msg: ChatCompletionMessageParam = {
-        role: "user",
-        content: createGptDto.msg
-      }
+      const completion = await GptInitConversation_UC(this._openAi, createGptDto, User_Auth, this.prismaService);
 
-      const completion = await this._openAi.chat.completions.create({
-        model: "gpt-4o-mini",
-        store: true,
-        messages: [
-             {
-                role: "system",
-                content: `
-                    Se te dará un mensaje de conversación con alguna solicitud de información o incluso una pregunta o conversación cordial
-                    Debes responderle de la manera más natural y amable posible.
-                `
-            },
-            msg,
-        ],
-      });
-
-      return completion;
+      return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.CREATED,
+        message: 'Conversación creada',
+        data: {
+          conversation_id: completion.conversation_id,
+          completion: completion,
+        }
+      })
 
     } catch (error) {
 
       this.logger.error(`[Gpt CreateConversation] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'GptService.createConversation');
+
+    }
+
+  }
+
+  async addMessage( id: string, addMessageDto: Gpt_AddMessageConversation_Dto, User_Auth: Session_Auth_I ) {
+
+    try {
+
+      const messages = await GptAddMessage_UC({
+        openai: this._openAi,
+        conversation_id: id,
+        addMessageDto,
+        User_Auth,
+        prisma: this.prismaService
+      });
+
+      return messages;
+
+    } catch (error) {
+
+      this.logger.error(`[Gpt AddMessage] Error: `, error);
+      this.exceptionsHandler.EmitException(error, 'GptService.addMessage');
 
     }
 

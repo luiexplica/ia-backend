@@ -34,6 +34,8 @@ interface EnvVars_I {
   EMAIL_SERVICE: string;
   WEB_URL: string;
 
+
+  OPENAI_API_KEY: string;
 }
 
 const envsSchema = joi.object({
@@ -59,7 +61,9 @@ const envsSchema = joi.object({
   EMAIL_USER: joi.string().optional(),
   EMAIL_PASS: joi.string().optional(),
   EMAIL_SERVICE: joi.string(),
-  WEB_URL: joi.string().optional()
+  WEB_URL: joi.string().optional(),
+
+  OPENAI_API_KEY: joi.string().optional()
 
 }).unknown(true);
 
@@ -98,6 +102,8 @@ export const envs = {
   email_user: envVars.EMAIL_USER,
   email_pass: envVars.EMAIL_PASS,
   email_service: envVars.EMAIL_SERVICE,
-  web_url: envVars.WEB_URL
+  web_url: envVars.WEB_URL,
+
+  openai_api_key: envVars.OPENAI_API_KEY
 
 }

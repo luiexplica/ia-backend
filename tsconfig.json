@@ -8,7 +8,11 @@
       "@auth/*": ["./src/modules/auth/*"],
       "@user/*": ["./src/modules/user/*"],
       "@emailing/*": ["./src/modules/emailing/*"],
-      "@notifications/*": ["./src/modules/notifications/*"]
+      "@notifications/*": ["./src/modules/notifications/*"],
+      "@products/*": ["./src/modules/products/*"],
+      "@gpt/*": ["./src/modules/products/gpt/*"],
+      "@lexia/*": ["./src/modules/products/lexia-assistant/*"]
+
     },
     "plugins": [
       { "transform": "typescript-transform-paths" }

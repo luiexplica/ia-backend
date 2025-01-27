@@ -9,6 +9,7 @@ export enum Gpt_Role_Enum {
 
 export interface Gpt_message_I {
   id: string;
+  gpt_id: string;
   role: Gpt_Role_Enum;
   content: string;
   prompt_tokens: number;
