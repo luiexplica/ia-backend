@@ -39,9 +39,9 @@ const GptInitStoreConversation_UC = async ({
               gpt_id: 'initial_' + gpt_id,
               content: msg.content as string,
               role: msg.role,
-              completion_tokens: usage.completion_tokens,
-              prompt_tokens: usage.prompt_tokens,
-              total_tokens: usage.total_tokens,
+              completion_tokens: 0,
+              prompt_tokens: 0,
+              total_tokens: 0,
               finish_reason: 'initial',
             },
             {

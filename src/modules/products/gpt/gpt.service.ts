@@ -37,8 +37,7 @@ export class GptService {
         statusCode: HttpStatus.CREATED,
         message: 'Conversación creada',
         data: {
-          conversation_id: completion.conversation_id,
-          completion: completion,
+          ...completion
         }
       })
 
@@ -55,7 +54,7 @@ export class GptService {
 
     try {
 
-      const messages = await GptAddMessage_UC({
+      const completion = await GptAddMessage_UC({
         openai: this._openAi,
         conversation_id: id,
         addMessageDto,
@@ -63,7 +62,15 @@ export class GptService {
         prisma: this.prismaService
       });
 
-      return messages;
+      // return messages;
+
+        return CreateResponse({
+        ok: true,
+        statusCode: HttpStatus.CREATED,
+        data: {
+          ...completion
+        }
+      })
 
     } catch (error) {
 

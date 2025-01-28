@@ -184,7 +184,7 @@ model ia_conversation_Ety {
 }
 
 model gpt_message_Ety {
-  id                String        @id @default(uuid())
+  id                Int        @id @default(autoincrement())
   gpt_id            String        @unique
   role              String
   content           String

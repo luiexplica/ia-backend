@@ -55,9 +55,17 @@ export const GptAddMessage_UC = async ({
     ],
   });
 
+  await GptAddStoreConversation_UC({
+    msg: new_msg,
+    conversation_id,
+    completion,
+    User_Auth,
+    prisma
+  })
+
   return {
     conversation_id,
-    completion
+    completion: completion.choices[0].message.content
   }
 
 }
@@ -88,7 +96,7 @@ const GptAddStoreConversation_UC = async ({
 
   const messages: Prisma.gpt_message_EtyCreateManyInput[] = [
     {
-        gpt_id: 'sent_' + gpt_id,
+        gpt_id: 'user_' + gpt_id,
         content: msg.content as string,
         role: msg.role as string,
         completion_tokens: 0,
@@ -115,3 +123,17 @@ const GptAddStoreConversation_UC = async ({
 
 }
 
+
+
+
+/*
+
+  REQUISITOS:
+
+  insta web, boton de pago
+
+  requisitos:
+    banco mercantil y banesco cuenta juridica , banco mercantil soporta todo
+
+
+ */
