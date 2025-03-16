@@ -12,8 +12,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       '@luiexplica/ia-dev-services':
-        specifier: ^1.0.103
-        version: 1.0.103(@formkit/tempo@0.1.2)(rxjs@7.8.1)(typescript@5.7.3)
+        specifier: latest
+        version: 1.0.104(@formkit/tempo@0.1.2)(rxjs@7.8.1)(typescript@5.7.3)
       '@nestjs/common':
         specifier: ^11.0.1
         version: 11.0.1(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -538,8 +538,8 @@ packages:
     resolution: {integrity: sha512-/gKJun8NNiWGZJkGzI/Ragc53cOdcLNdzjLaIa+GEjguQs0ulsurx8WN0jijdK9yPqDvziX995sMRLyLt1uZMQ==}
     engines: {node: '>= 0.4'}
 
-  '@luiexplica/ia-dev-services@1.0.103':
-    resolution: {integrity: sha512-oEiwYtOrKlKwMwXQ9sqim8ZRr0rwNEPlsN7GW4OkMEDBCeGeS0JRcEuNWITxLKKsh0IAqwPJlQ2GCsmvJu3lvA==, tarball: https://npm.pkg.github.com/download/@luiexplica/ia-dev-services/1.0.103/02711449f119088ff5b1fc2346034e09c9e99258}
+  '@luiexplica/ia-dev-services@1.0.104':
+    resolution: {integrity: sha512-kUBymsImHkzwv8rqy1ODwMNs/QH4RL2Nh8tQJ1VGZceHRKU4ieNXDPAzJ7mlgZTg8qKxs4sdGjUJ1ZQWBa4IEA==, tarball: https://npm.pkg.github.com/download/@luiexplica/ia-dev-services/1.0.104/83d2318003adaa9354c212550d09a56fba464e9c}
     peerDependencies:
       '@formkit/tempo': ^0.1.2
       rxjs: ^7.8.2
@@ -4292,7 +4292,7 @@ snapshots:
     dependencies:
       call-bind: 1.0.8
 
-  '@luiexplica/ia-dev-services@1.0.103(@formkit/tempo@0.1.2)(rxjs@7.8.1)(typescript@5.7.3)':
+  '@luiexplica/ia-dev-services@1.0.104(@formkit/tempo@0.1.2)(rxjs@7.8.1)(typescript@5.7.3)':
     dependencies:
       '@formkit/tempo': 0.1.2
       rxjs: 7.8.1

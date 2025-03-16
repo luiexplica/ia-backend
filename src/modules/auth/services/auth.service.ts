@@ -73,9 +73,9 @@ export class AuthService {
 
         const auth = await AuthRegister_UC(register, prisma);
         await this.accountrequestsService.create_requestByAuth({ type: RequestType_Enum.CONFIRM_ACCOUNT }, {
-          user: auth.user_id,
           id: auth.id,
-          email: auth.email,
+          user: auth.user_id,
+          email: auth.email
         }, prisma);
 
         return auth;

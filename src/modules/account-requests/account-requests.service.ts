@@ -11,7 +11,7 @@ import { AccountReqVerify_UC, AccountReqVerifyPass_UC } from './useCases/account
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Emailing_Evh_Enum } from '@emailing/services/emailing-eventHandler.service';
 import { auth_Ety, Prisma } from '@prisma/client';
-import { Create_Request_Key_Dto, Create_Password_Request_Dto, Accept_Password_Request_Dto } from '@luiexplica/ia-dev-services';
+import { Create_Request_Key_Dto, Create_Password_Request_Dto, Accept_Password_Request_Dto, Session_Auth_I } from '@luiexplica/ia-dev-services';
 import * as keygen from 'keygen';
 
 
@@ -28,7 +28,7 @@ export class AccountRequestsService {
   ) {
   }
 
-  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, auth: Partial<auth_Ety>, prismaClient?: Prisma.TransactionClient) {
+  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, auth: Partial<Session_Auth_I>, prismaClient?: Prisma.TransactionClient) {
 
     try {
 
