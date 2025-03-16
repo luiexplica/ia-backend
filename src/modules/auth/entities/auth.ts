@@ -1,6 +1,5 @@
+import { Auth_I, AuthStatus_Enum, User_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
 import { auth_Ety } from '@prisma/client';
-import { User_I } from '@user/interfaces/user.interface';
-import { Auth_I, AuthStatus_Enum, User_Role_Enum } from '@auth/interfaces/auth.interface';
 
 export class Auth implements Auth_I {
 

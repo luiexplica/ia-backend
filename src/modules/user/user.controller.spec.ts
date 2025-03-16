@@ -3,9 +3,6 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PrismaModule } from '@db/prisma/prisma.module';
 import { CoreModule } from '@core/core.module';
-import { UpdateUser_Dto } from './dto/update-user.dto';
-import { Pagination_Dto } from '@core/dto/pagination.dto';
-import { CreateResponse } from '../../core/helpers/createResponse';
 
 describe('UserController', () => {
   let controller: UserController;

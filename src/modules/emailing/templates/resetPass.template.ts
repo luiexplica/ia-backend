@@ -1,7 +1,7 @@
 
 
 import { envs } from "@core/config/envs";
-import { Email_I, Email_ResetPassword_I } from "@emailing/interfaces/emailing.interface";
+import { Email_ResetPassword_I, Email_I } from "@luiexplica/ia-dev-services";
 
 export const ResetPassword_Template = (props: Email_ResetPassword_I['data']): Partial<Email_I> => {
 

@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { LexiaAssistantService } from './lexia-assistant.service';
-import { CreateLexiaAssistantDto } from './dto/create-lexia-assistant.dto';
-import { UpdateLexiaAssistantDto } from './dto/update-lexia-assistant.dto';
+import { CreateLexiaAssistantDto } from '@luiexplica/ia-dev-services';
 
 @Controller('products/lexia-assistant')
 export class LexiaAssistantController {

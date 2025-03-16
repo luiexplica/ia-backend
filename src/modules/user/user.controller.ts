@@ -1,9 +1,8 @@
-import { Session_Auth_I } from '@luiexplica/ia-dev-services';
+import { Session_Auth_I, UpdateUser_Dto } from '@luiexplica/ia-dev-services';
 import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
-import { UpdateUser_Dto } from './dto/update-user.dto';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
 
 @Controller('user')

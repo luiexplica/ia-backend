@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { NotificationsService } from "./notifications.service";
-import { RequestType_Enum } from "@ac-requests/interfaces/accountRequests.inteface";
+import { RequestType_Enum } from "@luiexplica/ia-dev-services";
 
 
 export enum Notifications_Evh_Enum {
@@ -13,7 +13,7 @@ export type Notifications_Evh_Payload = {
 }
 
 @Injectable()
-export class NotificationsEventHandlerService {
+export class NotificationsEventsService {
 
   constructor(
     private readonly notificationsService: NotificationsService,

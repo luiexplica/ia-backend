@@ -2,9 +2,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-import { JWT_Payload_I } from '@auth/interfaces/jwt-payload.interface';
 import { envs } from '@core/config/envs';
 import { PrismaService } from '@db/prisma/prisma.service';
+import { JWT_Payload_I } from '@luiexplica/ia-dev-services';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

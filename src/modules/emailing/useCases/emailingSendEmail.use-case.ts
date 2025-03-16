@@ -1,6 +1,6 @@
 
-import { Email_I } from "@emailing/interfaces/emailing.interface";
 import { EmailConfig } from "@emailing/config/email.config";
+import { Email_I } from "@luiexplica/ia-dev-services";
 import * as nodemailer from 'nodemailer';
 
 export const EmailingSendEmail_UC = async (props: Email_I) => {

@@ -1,7 +1,7 @@
 
 
 import { envs } from "@core/config/envs";
-import { Email_CreatedAccount_I, Email_I } from "@emailing/interfaces/emailing.interface";
+import { Email_CreatedAccount_I, Email_I } from "@luiexplica/ia-dev-services";
 
 export const CreatedAccount_Template = (props: Email_CreatedAccount_I['data']): Partial<Email_I> => {
 

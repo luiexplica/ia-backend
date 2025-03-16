@@ -3,14 +3,14 @@ import { NotificationsService } from './services/notifications.service';
 import { NotificationsController } from './notifications.controller';
 import { EmailingModule } from '@emailing/emailing.module';
 import { UserModule } from '@user/user.module';
-import { NotificationsEventHandlerService } from './services/notifications-eventHandler.service';
+import { NotificationsEventsService } from './services/notifications-events.service';
 
 @Module({
   controllers: [
     NotificationsController
   ],
   providers: [
-    NotificationsEventHandlerService,
+    NotificationsEventsService,
     NotificationsService
   ],
   imports: [

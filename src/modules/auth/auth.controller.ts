@@ -1,11 +1,9 @@
 
 import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { AuthRegister_Dto } from './dto/register-user.dto';
-import { LoginAuth_Dto } from './dto/login-user.dto';
 import { User_Auth } from './decorators/user-auth.decorator';
-import { Session_Auth_I } from './interfaces/auth.interface';
 import { Auth, Auth_SameUser } from './decorators/auth.decorator';
+import { AuthRegister_Dto, LoginAuth_Dto, Session_Auth_I } from '@luiexplica/ia-dev-services';
 
 @Controller('auth')
 export class AuthController {

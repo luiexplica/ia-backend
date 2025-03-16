@@ -1,5 +1,5 @@
-import { Email_ChangeEmail_I, Email_I } from "@emailing/interfaces/emailing.interface";
 import { envs } from "@core/config/envs";
+import { Email_ChangeEmail_I, Email_I } from "@luiexplica/ia-dev-services";
 
 export const EmailChange_Template = (props: Email_ChangeEmail_I['data']): Partial<Email_I> => {
 

@@ -1,5 +1,5 @@
-import { Emailing_Evh_Payload } from '@emailing/services/emailing-eventHandler.service';
-import { Notifications_Evh_Enum, Notifications_Evh_Payload } from '@notifications/services/notifications-eventHandler.service';
+import { Emailing_Evh_Payload } from '@emailing/services/emailing-events.service';
+import { Notifications_Evh_Enum, Notifications_Evh_Payload } from '@notifications/services/notifications-events.service';
 import { AccountReqCreatePass_UC } from '@ac-requests/useCases/accountReq-createPassword.use-case';
 import { AccountReqCreate_UC } from '@ac-requests/useCases/accountReq-create.use-case';
 import { Injectable, Logger } from '@nestjs/common';
@@ -9,8 +9,8 @@ import { CreateResponse } from '@core/helpers/createResponse';
 import { AccountReqGet_UC } from '@ac-requests/useCases/accountReq-get.use-case';
 import { AccountReqVerify_UC, AccountReqVerifyPass_UC } from './useCases/accountReq-verify.use-case';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Emailing_Evh_Enum } from '@emailing/services/emailing-eventHandler.service';
-import { auth_Ety, Prisma } from '@prisma/client';
+import { Emailing_Evh_Enum } from '@emailing/services/emailing-events.service';
+import { Prisma } from '@prisma/client';
 import { Create_Request_Key_Dto, Create_Password_Request_Dto, Accept_Password_Request_Dto, Session_Auth_I } from '@luiexplica/ia-dev-services';
 import * as keygen from 'keygen';
 

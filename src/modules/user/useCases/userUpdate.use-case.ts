@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
-import { UpdateUser_Dto } from "@user/dto/update-user.dto";
 import { handleUserNotFound } from "./utils/HandleUserNotFound";
+import { UpdateUser_Dto } from '@luiexplica/ia-dev-services';
 
 export const UserUpdate_UC = async (user_id: string, UpdateUser_Dto: UpdateUser_Dto, prisma: Prisma.TransactionClient) => {
 

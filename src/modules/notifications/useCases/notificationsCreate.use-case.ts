@@ -1,9 +1,8 @@
 import { Prisma } from "@prisma/client";
-import { Create_Notification_Dto } from "@notifications/dto/create-notification.dto";
-import { NotificationTemplate_Enum } from "@notifications/interfaces/notifications.interfaces";
 import { NotificationCreatedAccount_Template } from "@notifications/templates/notificationCreatedAccount.template";
 import { NotificationChangeEmail_Template } from "@notifications/templates/notificationChangeEmail.template";
 import { NotificationResetPassword_Template } from "@notifications/templates/notificationResetPass.template";
+import { Create_Notification_Dto, NotificationTemplate_Enum } from "@luiexplica/ia-dev-services";
 
 export const NotificationsCreate_UC = async (create: Create_Notification_Dto, prisma: Prisma.TransactionClient) => {
 

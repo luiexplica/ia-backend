@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { JWT_Payload_I } from "@auth/interfaces/jwt-payload.interface";
 import { envs } from "@core/config/envs";
+import { JWT_Payload_I } from "@luiexplica/ia-dev-services";
 
 @Injectable()
 export class AuthConfigService {

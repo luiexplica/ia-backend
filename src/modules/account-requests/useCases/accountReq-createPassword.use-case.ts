@@ -1,5 +1,5 @@
+import { Create_Password_Request_Dto } from '@luiexplica/ia-dev-services';
 import { Prisma, $Enums } from '@prisma/client';
-import { Create_Password_Request_Dto } from '@ac-requests/dto/create-password-request.dto';
 
 interface Create_Request_Key_I {
   create: Create_Password_Request_Dto;

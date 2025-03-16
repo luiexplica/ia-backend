@@ -1,8 +1,8 @@
 import { Controller, Post } from '@nestjs/common';
 import { Payload } from '@nestjs/microservices';
-import { Send_Email_Dto } from './dto/send-email.dto';
 import { EmailingService } from './services/emailing.service';
 import { Auth } from '@auth/decorators/auth.decorator';
+import { Send_Email_Dto } from '@luiexplica/ia-dev-services';
 
 @Controller('emailing')
 export class EmailingController {

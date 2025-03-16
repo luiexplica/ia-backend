@@ -1,10 +1,10 @@
-import { auth_Ety, Prisma } from '@prisma/client';
-import { LoginAuth_Dto } from "@auth/dto/login-user.dto";
+import { Prisma } from '@prisma/client';
 import { HttpStatus, HttpException } from "@nestjs/common";
 import { CreateResponse } from "@core/helpers/createResponse";
-import * as bcrypt from 'bcrypt';
 import { UpdateLastSession_UC } from "./updateLastSession.use-case";
 import { AuthGetByEmail_UC } from './authGetByEmail.use-case';
+import { LoginAuth_Dto } from '@luiexplica/ia-dev-services';
+import * as bcrypt from 'bcrypt';
 
 const isValidPassword = async (password: string, authPassword: string) => {
 

@@ -1,10 +1,9 @@
-import { Session_Auth_I } from '@luiexplica/ia-dev-services';
+import { Create_Notification_Dto, Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { Controller, Get, Query, Param, ParseIntPipe, Delete, Post, Body } from '@nestjs/common';
 import { NotificationsService } from './services/notifications.service';
 import { Auth } from '@auth/decorators/auth.decorator';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
-import { Create_Notification_Dto } from './dto/create-notification.dto';
 
 @Controller('notifications')
 export class NotificationsController {

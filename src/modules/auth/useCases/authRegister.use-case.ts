@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
-import { AuthRegister_Dto } from "../dto/register-user.dto";
 import { CreateResponse } from "@core/helpers/createResponse";
 import { Prisma } from "@prisma/client";
 import { AuthGetByEmail_UC } from "./authGetByEmail.use-case";
+import { AuthRegister_Dto } from "@luiexplica/ia-dev-services";
 import * as bcrypt from 'bcrypt';
 
 const isValidRegisterRole = (role: string): void => {

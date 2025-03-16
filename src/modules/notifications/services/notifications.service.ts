@@ -1,5 +1,4 @@
-import { Emailing_Evh_Payload } from '@emailing/services/emailing-eventHandler.service';
-import { Session_Auth_I } from '@luiexplica/ia-dev-services';
+import { Create_Notification_Dto, NotificationTemplate_Enum, RequestType_Enum, Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { PrismaService } from '@db/prisma/prisma.service';
@@ -8,11 +7,7 @@ import { NotificationsCreate_UC } from '@notifications/useCases/notificationsCre
 import { NotificationsGetAll_UC } from '@notifications/useCases/notificationsGetAll.use-case';
 import { DeleteNotification_UC } from '@notifications/useCases/notificationsDelete.use-case';
 import { NotificationsRead_UC } from '@notifications/useCases/notificationsRead.use-case';
-import { Create_Notification_Dto } from '@notifications/dto/create-notification.dto';
 import { Pagination_Dto } from '@core/dto/pagination.dto';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { NotificationTemplate_Enum } from '@notifications/interfaces/notifications.interfaces';
-import { RequestType_Enum } from '@ac-requests/interfaces/accountRequests.inteface';
 
 @Injectable()
 export class NotificationsService {

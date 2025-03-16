@@ -1,5 +1,5 @@
+import { EmailConfig_I } from "@luiexplica/ia-dev-services"
 import { envs } from "@core/config/envs"
-import { EmailConfig_I } from "../interfaces/emailing.interface"
 
 export const EmailConfig = (): EmailConfig_I => {
 

@@ -1,7 +1,7 @@
 
 import { Module } from '@nestjs/common';
 import { EmailingService } from './services/emailing.service';
-import { EmailingEventHandlerService } from './services/emailing-eventHandler.service';
+import { EmailingEventsService } from './services/emailing-events.service';
 
 // @Global()
 @Module({
@@ -9,7 +9,7 @@ import { EmailingEventHandlerService } from './services/emailing-eventHandler.se
     // EmailingController
   ],
   providers: [
-    EmailingEventHandlerService,
+    EmailingEventsService,
     EmailingService,
   ],
   exports: [

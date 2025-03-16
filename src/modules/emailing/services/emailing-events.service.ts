@@ -2,7 +2,7 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { EmailingService } from "./emailing.service";
-import { Create_EmailByRequest_I } from "@emailing/interfaces/emailing.interface";
+import { Create_EmailByRequest_I } from "@luiexplica/ia-dev-services";
 
 export enum Emailing_Evh_Enum {
   SEND_BY_REQUEST = "Emailing.sendByRequest",
@@ -13,7 +13,7 @@ export type Emailing_Evh_Payload = {
 }
 
 @Injectable()
-export class EmailingEventHandlerService {
+export class EmailingEventsService {
 
   constructor(
     private readonly EmailingService: EmailingService,

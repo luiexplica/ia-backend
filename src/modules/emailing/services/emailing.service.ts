@@ -1,11 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmailingChangeEmail_UC } from '@emailing/useCases/emailingChangeEmail.use-case';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
-import { Send_Email_Dto } from '@emailing/dto/send-email.dto';
 import { EmailingResetPassword_UC } from '@emailing/useCases/emailingResetPass.use-case';
 import { EmailingCreateAccount_UC } from '@emailing/useCases/emailingCreateAccount.use-case';
-import { Create_EmailByRequest_I } from '@emailing/interfaces/emailing.interface';
-import { RequestType_Enum } from '@ac-requests/interfaces/accountRequests.inteface';
+import { Create_EmailByRequest_I, RequestType_Enum, Send_Email_Dto } from '@luiexplica/ia-dev-services';
 
 @Injectable()
 export class EmailingService {

@@ -1,15 +1,12 @@
 import { PrismaService } from '@db/prisma/prisma.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
-import { AuthRegister_Dto } from '@auth/dto/register-user.dto';
 import { AuthRegister_UC } from '@auth/useCases/authRegister.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
-import { LoginAuth_Dto } from '@auth/dto/login-user.dto';
 import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
-import { JWT_Payload_I } from '@auth/interfaces/jwt-payload.interface';
 import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { RequestType_Enum, Response_I } from '@luiexplica/ia-dev-services';
+import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
 import { auth_Ety } from '@prisma/client';
 import { AuthConfigService } from './authConfig.service';
 
@@ -144,7 +141,7 @@ export class AuthService {
       const token = await this.authConfigService.signJWT({
         id: auth.id,
         email: auth.email,
-        role: auth.role,
+        role: auth.role as User_Role_Enum,
         user: auth.user_id,
         username: auth.username ?? '',
       });

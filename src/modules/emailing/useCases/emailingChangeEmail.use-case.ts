@@ -1,7 +1,6 @@
 import { EmailChange_Template } from '@emailing/templates/emailChange.template';
-import { Send_Email_Dto } from "@emailing/dto/send-email.dto";
-import { Email_ChangeEmail_I } from "@emailing/interfaces/emailing.interface";
 import { EmailingSendEmail_UC } from './emailingSendEmail.use-case';
+import { Send_Email_Dto, Email_ChangeEmail_I } from '@luiexplica/ia-dev-services';
 
 
 export const EmailingChangeEmail_UC = async (send_email: Send_Email_Dto) => {

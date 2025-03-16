@@ -1,5 +1,5 @@
 import { TempoHandler } from "@core/helpers/TempoHandler";
-import { auth_Ety, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { AuthGetByEmail_UC } from "./authGetByEmail.use-case";
 
 export const UpdateLastSession_UC = async (email: string, prisma: Prisma.TransactionClient) => {

@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UpdateUser_Dto } from './dto/update-user.dto';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { UserGetOne_UC } from './useCases/userGetOne.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
@@ -7,7 +6,7 @@ import { UserUpdate_UC } from './useCases/userUpdate.use-case';
 import { UserGetAll_UC } from './useCases/userGetAll.use-case';
 import { PrismaService } from '@db/prisma/prisma.service';
 import { user_Ety } from '@prisma/client';
-import { Pagination_Dto, Response_I, Session_Auth_I } from '@luiexplica/ia-dev-services';
+import { Pagination_Dto, Response_I, Session_Auth_I, UpdateUser_Dto } from '@luiexplica/ia-dev-services';
 
 
 @Injectable()

@@ -1,6 +1,5 @@
-import { Gpt_AddMessageConversation_Dto } from '@gpt/dto/addMessageConversation.dto';
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Session_Auth_I } from "@luiexplica/ia-dev-services";
+import { Gpt_AddMessageConversation_Dto, Session_Auth_I } from "@luiexplica/ia-dev-services";
 import { GptGetMessages_UC } from './gptGetMessages.use-case';
 
 import OpenAI from "openai";
