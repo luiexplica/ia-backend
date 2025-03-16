@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { NotificationsGetOne_UC } from "./notificationsGetOne.use-case";
 import { CreateResponse } from "@core/helpers/createResponse";
-import { TempoHandler } from "@core/helpers/TempoHandler";
+import { TempoHandler } from '@luiexplica/ia-dev-services';
 import { HttpException } from "@nestjs/common";
 
 const isNotFound = () => {

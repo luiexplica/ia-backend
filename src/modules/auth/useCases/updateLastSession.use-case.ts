@@ -1,4 +1,4 @@
-import { TempoHandler } from "@core/helpers/TempoHandler";
+import { TempoHandler } from '@luiexplica/ia-dev-services';
 import { Prisma } from "@prisma/client";
 import { AuthGetByEmail_UC } from "./authGetByEmail.use-case";
 

@@ -1,8 +1,8 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { Pagination_I, Pagination_meta, PaginationMeta_I } from '@core/helpers/pagination.meta';
 import { Prisma_FindMany_I } from './interfaces';
 import { DeleteOrphansOneToOneMiddleware } from './middleware/deleteOrphans-one-one.middleware';
+import { Pagination_I, Pagination_meta, PaginationMeta_I } from '@luiexplica/ia-dev-services';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {

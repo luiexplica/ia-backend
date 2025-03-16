@@ -3,7 +3,7 @@ import { AccountReqGet_UC } from './accountReq-get.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { HttpStatus, HttpException } from '@nestjs/common';
 import { AccountReqAuth_UC, AccountReqAuthPassword_UC } from './accountReq-verifyAuth.use-case';
-import { TempoHandler } from '@core/helpers/TempoHandler';
+import { TempoHandler } from '@luiexplica/ia-dev-services';
 
 const isRequestUsed = () => {
 
