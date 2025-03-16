@@ -1,11 +1,8 @@
 import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
-import { Create_Request_Key_Dto } from './dto/create-request-key.dto';
 import { Auth } from '@auth/decorators/auth.decorator';
-import { Create_Password_Request_Dto } from './dto/create-password-request.dto';
-import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
 import { AccountRequestsService } from './account-requests.service';
+import { Accept_Password_Request_Dto, Create_Password_Request_Dto, Create_Request_Key_Dto, Session_Auth_I } from '@luiexplica/ia-dev-services';
 
 @Controller('account-requests')
 export class AccountRequestsController {

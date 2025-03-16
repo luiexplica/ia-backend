@@ -1,5 +1,5 @@
+import { Pagination_Dto } from "@luiexplica/ia-dev-services";
 
-import { Pagination_Dto } from "@core/dto/pagination.dto";
 
 export interface Prisma_FindMany_I<T> {
   model: any,

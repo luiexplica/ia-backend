@@ -1,5 +1,5 @@
 import { Emailing_Evh_Payload } from '@emailing/services/emailing-eventHandler.service';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { PrismaService } from '@db/prisma/prisma.service';

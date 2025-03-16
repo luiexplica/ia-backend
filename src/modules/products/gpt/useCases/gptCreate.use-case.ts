@@ -1,7 +1,7 @@
 import { $Enums, PrismaClient } from "@prisma/client";
 import { ChatCompletion, ChatCompletionMessageParam } from "openai/resources";
 import { IA_CreateConversation_Dto } from "@products/dto/createConversation.dto";
-import { Session_Auth_I } from "@auth/interfaces/auth.interface";
+import { Session_Auth_I } from "@luiexplica/ia-dev-services";
 import OpenAI from "openai";
 import * as uuid from 'uuid';
 

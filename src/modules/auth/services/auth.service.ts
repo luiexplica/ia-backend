@@ -6,13 +6,10 @@ import { AuthRegister_UC } from '@auth/useCases/authRegister.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { LoginAuth_Dto } from '@auth/dto/login-user.dto';
 import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
-import { JwtService } from '@nestjs/jwt';
 import { JWT_Payload_I } from '@auth/interfaces/jwt-payload.interface';
-import { envs } from '@core/config/envs';
 import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { RequestType_Enum } from '@ac-requests/interfaces/accountRequests.inteface';
-import { Response_I } from '@core/interfaces/response.interface';
+import { RequestType_Enum, Response_I } from '@luiexplica/ia-dev-services';
 import { auth_Ety } from '@prisma/client';
 import { AuthConfigService } from './authConfig.service';
 

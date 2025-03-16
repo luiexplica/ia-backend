@@ -2,7 +2,7 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@db/prisma/prisma.service';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { IA_CreateConversation_Dto } from '../dto/createConversation.dto';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { GptInitConversation_UC } from './useCases/gptCreate.use-case';
 import { envs } from '@core/config/envs';
 import OpenAI from 'openai';

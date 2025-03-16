@@ -3,13 +3,11 @@ import { UpdateUser_Dto } from './dto/update-user.dto';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { UserGetOne_UC } from './useCases/userGetOne.use-case';
 import { CreateResponse } from '@core/helpers/createResponse';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
 import { UserUpdate_UC } from './useCases/userUpdate.use-case';
 import { UserGetAll_UC } from './useCases/userGetAll.use-case';
-import { Pagination_Dto } from '@core/dto/pagination.dto';
 import { PrismaService } from '@db/prisma/prisma.service';
-import { Response_I } from '@core/interfaces/response.interface';
 import { user_Ety } from '@prisma/client';
+import { Pagination_Dto, Response_I, Session_Auth_I } from '@luiexplica/ia-dev-services';
 
 
 @Injectable()
@@ -21,7 +19,6 @@ export class UserService {
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler
   ) {
-
   }
 
   async getOne(id: string) {

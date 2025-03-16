@@ -2,7 +2,7 @@ import { Gpt_AddMessageConversation_Dto } from './dto/addMessageConversation.dto
 import { Controller, Post, Body, ParseUUIDPipe, Param } from '@nestjs/common';
 import { GptService } from './gpt.service';
 import { Auth } from '@auth/decorators/auth.decorator';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { User_Auth } from '@auth/decorators/user-auth.decorator';
 import { IA_CreateConversation_Dto } from '@products/dto/createConversation.dto';
 

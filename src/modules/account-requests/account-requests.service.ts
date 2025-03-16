@@ -2,19 +2,16 @@ import { Emailing_Evh_Payload } from '@emailing/services/emailing-eventHandler.s
 import { Notifications_Evh_Enum, Notifications_Evh_Payload } from '@notifications/services/notifications-eventHandler.service';
 import { AccountReqCreatePass_UC } from '@ac-requests/useCases/accountReq-createPassword.use-case';
 import { AccountReqCreate_UC } from '@ac-requests/useCases/accountReq-create.use-case';
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
-import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@db/prisma/prisma.service';
-import { Create_Request_Key_Dto } from '@ac-requests/dto/create-request-key.dto';
 import { ExceptionsHandler } from '@core/helpers/Exceptions.handler';
 import { CreateResponse } from '@core/helpers/createResponse';
-import { Create_Password_Request_Dto } from '@ac-requests/dto/create-password-request.dto';
 import { AccountReqGet_UC } from '@ac-requests/useCases/accountReq-get.use-case';
 import { AccountReqVerify_UC, AccountReqVerifyPass_UC } from './useCases/accountReq-verify.use-case';
-import { Accept_Password_Request_Dto } from './dto/accept-password-request.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Emailing_Evh_Enum } from '@emailing/services/emailing-eventHandler.service';
-import { Prisma } from '@prisma/client';
+import { auth_Ety, Prisma } from '@prisma/client';
+import { Create_Request_Key_Dto, Create_Password_Request_Dto, Accept_Password_Request_Dto } from '@luiexplica/ia-dev-services';
 import * as keygen from 'keygen';
 
 
@@ -31,7 +28,7 @@ export class AccountRequestsService {
   ) {
   }
 
-  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, auth: Partial<Session_Auth_I>, prismaClient?: Prisma.TransactionClient) {
+  async create_requestByAuth(create_request_dto: Create_Request_Key_Dto, auth: Partial<auth_Ety>, prismaClient?: Prisma.TransactionClient) {
 
     try {
 

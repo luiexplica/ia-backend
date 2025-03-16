@@ -1,6 +1,6 @@
 
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { Response_I } from "@core/interfaces/response.interface";
+import { Response_I } from "@luiexplica/ia-dev-services";
 import { CreateResponse } from "./createResponse";
 
 @Injectable()

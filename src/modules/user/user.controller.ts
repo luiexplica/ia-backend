@@ -1,4 +1,4 @@
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { Controller, Get, Body, Param, ParseUUIDPipe, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth, Auth_SameIdOrAdmin } from '@auth/decorators/auth.decorator';

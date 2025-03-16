@@ -1,5 +1,5 @@
+import { RequestType_Enum } from "@luiexplica/ia-dev-services";
 import { IsEnum, IsOptional, IsString, IsUUID, ValidateIf } from "class-validator";
-import { RequestType_Enum } from "@ac-requests/interfaces/accountRequests.inteface";
 
 export class Create_Request_Key_Dto {
 

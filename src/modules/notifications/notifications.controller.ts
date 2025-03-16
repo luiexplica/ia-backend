@@ -1,4 +1,4 @@
-import { Session_Auth_I } from '@auth/interfaces/auth.interface';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 import { Controller, Get, Query, Param, ParseIntPipe, Delete, Post, Body } from '@nestjs/common';
 import { NotificationsService } from './services/notifications.service';
 import { Auth } from '@auth/decorators/auth.decorator';

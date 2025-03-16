@@ -1,4 +1,3 @@
-import { Pagination_Dto } from "@core/dto/pagination.dto";
 
 export interface PaginationMeta_I {
   page: number;
