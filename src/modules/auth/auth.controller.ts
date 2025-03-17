@@ -9,7 +9,6 @@ import { AuthRegister_Dto, LoginAuth_Dto, Session_Auth_I } from '@luiexplica/ia-
 export class AuthController {
 
   constructor(
-    // private readonly authService: AuthService
     private readonly authService: AuthService
   ) { }
 
