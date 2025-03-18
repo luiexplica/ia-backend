@@ -1,0 +1,43 @@
+
+/**
+ * ---------------------------- Auth declarations ---------------------------
+ */
+
+enum AuthStatus_Enum {
+  VERIFIED
+  BLOCKED
+  DELETED
+  SUSPENDED
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum User_Role_Enum {
+  ADMIN_ROLE
+  SUPPORT_ROLE
+  CLIENT_ROLE
+}
+
+model auth_Ety {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  password     String
+  username     String?         @unique
+  created_at   DateTime?       @default(now()) @db.Timestamptz(3)
+  updated_at   DateTime        @updatedAt @db.Timestamptz(3)
+  last_session DateTime?       @db.Timestamptz(3)
+  status       AuthStatus_Enum @default(PENDING)
+  role         User_Role_Enum  @default(CLIENT_ROLE)
+
+  user    user_Ety @relation(fields: [user_id], references: [id], onDelete: Restrict)
+  user_id String   @unique
+
+  account_requests accountRequests_Ety[]
+
+  @@map("lxia_auth")
+}
+
+/**
+ * --------------------------------------------------------------------------
+ */

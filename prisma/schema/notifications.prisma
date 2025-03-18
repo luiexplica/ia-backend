@@ -1,0 +1,35 @@
+
+
+/**
+ * ----------------------- Notifications declarations -----------------------
+ */
+
+enum NotificationState_Enum {
+  READ
+  UNREAD
+}
+
+enum NotificationTemplate_Enum {
+  CREATE_ACCOUNT
+  RESET_PASSWORD
+  CHANGE_EMAIL
+  INFO
+}
+
+model notifications_Ety {
+  id         Int                       @id @default(autoincrement())
+  subject    String
+  message    String
+  created_at DateTime?                 @default(now()) @db.Timestamptz(3)
+  read_at    DateTime?                 @db.Timestamptz(3)
+  state      NotificationState_Enum    @default(UNREAD)
+  template   NotificationTemplate_Enum @default(INFO)
+  user       user_Ety?                 @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String
+
+  @@map("lxia_notifications")
+}
+
+/**
+ * --------------------------------------------------------------------------
+ */
