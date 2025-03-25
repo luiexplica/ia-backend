@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { envs } from '@core/config/envs';
 import { extractTokenFromHeader } from '@core/helpers/req.helpers';
+import { Session_Auth_I } from '@luiexplica/ia-dev-services';
 
 @Injectable()
 export class Auth_Guard implements CanActivate {
@@ -38,15 +39,14 @@ export class Auth_Guard implements CanActivate {
 
       const auth = user;
 
-      request['auth_user'] = {
+      (request['auth_user'] as Session_Auth_I) = {
         id: auth.id,
         email: auth.email,
-        status: auth.status,
         role: auth.role,
         token: token,
         user: auth.user,
-        created_at: auth.created_at,
-      }
+        username: auth.username,
+      };
 
     } catch {
 

@@ -6,9 +6,10 @@ import { CreateResponse } from '@core/helpers/createResponse';
 import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
 import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
+import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, Session_Auth_I, Session_Client_I, Session_Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
 import { auth_Ety } from '@prisma/client';
 import { AuthConfigService } from './authConfig.service';
+import { AuthGetById_UC } from '../useCases/authGetById.use-case';
 
 export interface AuthService_I {
   getOneByEmail(email: string): Promise<Response_I<auth_Ety>>;
@@ -25,7 +26,6 @@ export class AuthService {
   private readonly logger = new Logger('AuthService');
 
   constructor(
-
     private readonly prismaService: PrismaService,
     private readonly exceptionsHandler: ExceptionsHandler,
     private readonly authConfigService: AuthConfigService,
@@ -107,16 +107,25 @@ export class AuthService {
         //  iat,
         // exp,
         token: new_token,
-        user
+        user: sessionAuth
       } = await this.authConfigService.verify(token);
 
-      return CreateResponse({
+      const {user} = await AuthGetById_UC(sessionAuth.id, this.prismaService);
+
+      return CreateResponse<Session_Response_I>({
         ok: true,
         statusCode: HttpStatus.OK,
         message: 'Token verificado',
         data: {
-          ...user,
+          auth: {
+          ...sessionAuth,
           token: new_token
+          },
+          client: {
+            name: user.name,
+            last_name: user.last_name,
+            profile_pic: 'pic'
+          }
         },
       })
 
@@ -146,11 +155,22 @@ export class AuthService {
         username: auth.username ?? '',
       });
 
-      return CreateResponse({
+      return CreateResponse<Session_Response_I>({
         ok: true,
         data: {
-          ...auth,
+          auth: {
+          id: auth.id,
+          email: auth.email,
+          role: auth.role as User_Role_Enum,
+          user: auth.user_id,
+          username: auth.username ?? '',
           token
+          },
+          client: {
+            name: auth.user.name,
+            last_name: auth.user.last_name,
+            profile_pic: 'pic'
+          }
         },
         message: 'Usuario logueado correctamente',
         statusCode: HttpStatus.OK,
