@@ -6,8 +6,7 @@ import { CreateResponse } from '@core/helpers/createResponse';
 import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
 import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, Session_Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
-import { auth_Ety } from '@prisma/client';
+import { AuthRegister_Dto, LoginAuth_Dto, RequestType_Enum, Session_Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
 import { AuthConfigService } from './authConfig.service';
 import { AuthGetById_UC } from '../useCases/authGetById.use-case';
 

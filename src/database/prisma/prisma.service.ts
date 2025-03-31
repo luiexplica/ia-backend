@@ -9,6 +9,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
   constructor() {
     super();
+
   }
 
   async onModuleInit() {
@@ -42,7 +43,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     ]);
 
     const meta: PaginationMeta_I = Pagination_meta(page, limit, total);
-
     return { data, meta };
 
   }
