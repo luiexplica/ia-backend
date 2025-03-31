@@ -6,19 +6,10 @@ import { CreateResponse } from '@core/helpers/createResponse';
 import { AuthLogin_UC } from '@auth/useCases/authLogin.use-case';
 import { AuthDeleteAccount_UC } from '@auth/useCases/authDeleteAccount.use-case';
 import { AccountRequestsService } from '@ac-requests/account-requests.service';
-import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, Session_Auth_I, Session_Client_I, Session_Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
+import { AuthRegister_Dto, JWT_Payload_I, LoginAuth_Dto, RequestType_Enum, Response_I, Session_Response_I, User_Role_Enum } from '@luiexplica/ia-dev-services';
 import { auth_Ety } from '@prisma/client';
 import { AuthConfigService } from './authConfig.service';
 import { AuthGetById_UC } from '../useCases/authGetById.use-case';
-
-export interface AuthService_I {
-  getOneByEmail(email: string): Promise<Response_I<auth_Ety>>;
-  delete(auth_id: string): Promise<Response_I<any>>;
-  register(register: AuthRegister_Dto): Promise<Response_I<auth_Ety>>;
-  signJWT(payload: JWT_Payload_I): Promise<string>;
-  renewToken(token: string): Promise<Response_I<Partial<JWT_Payload_I>>>;
-  login(login: LoginAuth_Dto): Promise<Response_I<auth_Ety>>;
-}
 
 @Injectable()
 export class AuthService {
@@ -38,7 +29,6 @@ export class AuthService {
   async delete(auth_id: string) {
 
     try {
-
       const resp = await this.prismaService.$transaction(async (prisma) => {
         return await AuthDeleteAccount_UC(auth_id, prisma);
       });
@@ -54,7 +44,6 @@ export class AuthService {
       });
 
     } catch (error) {
-
       this.logger.error(`[Auth Delete] Error: `, error);
       this.exceptionsHandler.EmitException(error, 'AuthService.delete');
 

@@ -4,7 +4,7 @@ import { CreateResponse } from "@core/helpers/createResponse";
 import { UpdateLastSession_UC } from "./updateLastSession.use-case";
 import { AuthGetByEmail_UC } from './authGetByEmail.use-case';
 import { LoginAuth_Dto } from '@luiexplica/ia-dev-services';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const isValidPassword = async (password: string, authPassword: string) => {
 

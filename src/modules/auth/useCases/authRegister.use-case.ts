@@ -3,7 +3,7 @@ import { CreateResponse } from "@core/helpers/createResponse";
 import { Prisma } from "@prisma/client";
 import { AuthGetByEmail_UC } from "./authGetByEmail.use-case";
 import { AuthRegister_Dto } from "@luiexplica/ia-dev-services";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const isValidRegisterRole = (role: string): void => {
   if (role === 'ADMIN_ROLE') {
@@ -45,12 +45,12 @@ export const AuthRegister_UC = async (AuthRegister_Dto: AuthRegister_Dto, prisma
 
   await isValidEmailExists(email, prisma);
   // isValidRegisterRole(role);
-
+  const salt = bcrypt.genSaltSync(10);
   const auth = await prisma.auth_Ety.create({
     data: {
       email,
       // role,
-      password: bcrypt.hashSync(password, 10),
+      password: bcrypt.hashSync(password, salt),
       user: {
         create: {
           name,

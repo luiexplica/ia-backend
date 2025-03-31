@@ -14,19 +14,21 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   async onModuleInit() {
     this.setupMiddlewares();
     await this.$connect();
+
   }
 
   async setupMiddlewares() {
     const deleteOrphan_middleware = await DeleteOrphansOneToOneMiddleware(this);
     this.$use(deleteOrphan_middleware);
+
   }
 
   async onModuleDestroy() {
     await this.$disconnect();
+
   }
 
   async find_pagination<T, J>({ model, args, pagination }: Prisma_FindMany_I<J>): Promise<Pagination_I<T>> {
-
     const { page, limit } = pagination;
     const skip = (page - 1) * limit;
 
@@ -42,6 +44,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     const meta: PaginationMeta_I = Pagination_meta(page, limit, total);
 
     return { data, meta };
+
   }
 
 }

@@ -1,7 +1,7 @@
 import { accountRequests_Ety, Prisma } from '@prisma/client';
 import { CreateResponse } from '@core/helpers/createResponse';
 import { HttpStatus } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const confirmAccount = async (request: accountRequests_Ety, prisma: Prisma.TransactionClient) => {
 
@@ -62,7 +62,8 @@ export const AccountReqAuth_UC = async (request: accountRequests_Ety, prisma: Pr
 
 export const AccountReqAuthPassword_UC = async (password: string, auth_id: string, prisma: Prisma.TransactionClient) => {
 
-  const new_password = await bcrypt.hashSync(password, 10);
+  const salt = bcrypt.genSaltSync(10);
+  const new_password = await bcrypt.hashSync(password, salt);
 
   const updated_auth = await prisma.auth_Ety.updateManyAndReturn({
     where: {
