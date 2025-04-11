@@ -19,34 +19,3 @@ export class EmailingController {
   }
 
 }
-
-/*
-
-{
-	"to": "alvarosego01@gmail.com",
-	"confirm_account": {
-		"name": "Álvaro",
-		"key": "123456"
-	}
-}
-
-  {
-	"to": "alvarosego01@gmail.com",
-	"reset_password": {
-		"name": "Álvaro",
-		"key": "123456"
-	}
-}
-
-  {
-	"to": "alvarosego01@gmail.com",
-	"change_email": {
-		"name": "Álvaro",
-		"key": "123456",
-    "new_email": "alvaro_segovia01@hotmail.com"
-	}
-}
-
-
-
- */
