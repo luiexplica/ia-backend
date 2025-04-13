@@ -8,18 +8,22 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { EmailingModule } from './modules/emailing/emailing.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ProductsModule } from './modules/products/products.module';
+import { MikroModule } from './modules/mikro/mikro.module';
+import { MIKRO_ORM_MODULE } from './database/mikro-orm.module';
 
  @Module({
   imports: [
+    MIKRO_ORM_MODULE,
     EventEmitterModule.forRoot(),
     CoreModule,
-    PrismaModule,
-    AuthModule,
-    AccountRequestsModule,
-    UserModule,
-    NotificationsModule,
-    EmailingModule,
-    ProductsModule
+    // PrismaModule,
+    // AuthModule,
+    // AccountRequestsModule,
+    // UserModule,
+    // NotificationsModule,
+    // EmailingModule,
+    // ProductsModule,
+    MikroModule
   ],
   controllers: [],
   providers: [],
